@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Python Screen Gif(1)
-subtitle: Python Record Screen to Gif(1)
+title: Python Screen Gif (1)
+subtitle: Python Record Screen to Gif
 date: 2018-10-22
 author: BF
 header-img: img/bf/sun_02.jpg
@@ -70,13 +70,14 @@ c1 = content.subclip((0, 1), (0, 6)).resize((960, 640))
 # 将片段保存为gif图到python的默认路径
 c1.write_gif('{}.gif'.format(OUTPUT_NAME))
 ```
+
 # Next
 
 接下来，需要研究一下几个点：
 
-* 怎么使用GUI来录制固定区域的屏幕
-* 是否可以截取图片流，再直接把图片打包成gif，省去中间生成avi的过程。
-* ...
+- 怎么使用 GUI 来录制固定区域的屏幕
+- 是否可以截取图片流，再直接把图片打包成 gif，省去中间生成 avi 的过程。
+- ...
 
 更多信息可以参考：
 
