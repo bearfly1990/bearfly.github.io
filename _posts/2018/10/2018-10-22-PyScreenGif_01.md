@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python Screen Gif (1)
+title: Python Screen Gif
 subtitle: Python Record Screen to Gif
 date: 2018-10-22
 author: BF
