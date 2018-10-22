@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python Screen Gif
+title: Python Screen Gif (01)
 subtitle: Python Record Screen to Gif
 date: 2018-10-22
 author: BF
@@ -82,4 +82,5 @@ c1.write_gif('{}.gif'.format(OUTPUT_NAME))
 更多信息可以参考：
 
 [https://blog.csdn.net/Spade\_/article/details/79516322](https://blog.csdn.net/Spade_/article/details/79516322)
+
 [https://blog.csdn.net/zzzzjh/article/details/80903597](https://blog.csdn.net/zzzzjh/article/details/80903597)
