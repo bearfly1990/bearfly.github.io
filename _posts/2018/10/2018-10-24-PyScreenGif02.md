@@ -43,8 +43,11 @@ c1.write_gif('{}.gif'.format(OUTPUT_NAME))
 - 怎么使用 GUI 来录制固定区域的屏幕
 - 是否可以提高性能，每次截图放到 list 中性能消耗比较大
 - ...
-  更多信息可以参考：
+
+更多信息可以参考：
 
 [Python Screen Gif (01)](https://bearfly1990.github.io/2018/10/22/PyScreenGif/)
+
+[Python Screen Gif (03)](https://bearfly1990.github.io/2018/10/27/PyScreenGif03/)
 
 [https://www.cnblogs.com/dcb3688/p/4608048.html](https://www.cnblogs.com/dcb3688/p/4608048.html)
