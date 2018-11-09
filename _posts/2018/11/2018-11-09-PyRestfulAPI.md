@@ -130,4 +130,4 @@ if __name__ == "__main__":
 
 [RESTful架构详解](http://www.runoob.com/w3cnote/restful-architecture.html)
 
-[python实现RESTful服务（基于flask](https://www.jianshu.com/p/6ac1cab17929)
+[python实现RESTful服务（基于flask)](https://www.jianshu.com/p/6ac1cab17929)
