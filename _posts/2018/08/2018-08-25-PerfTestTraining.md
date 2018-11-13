@@ -48,7 +48,7 @@ tags:
 
 当超过之后，便会开始达到系统处理的瓶颈，使反应时间增加，反而使`TPS`减小。所以一般我们会从小变大线程数来得到`TPS`的结果，示意图如下，实际没有这么平滑。
 
-![TPS](https://raw.githubusercontent.com/bearfly1990/bearfly1990.github.io/master/_posts/2018/08/imgs/2018-08-25-PerfTestTraining-TPS.jpg)
+![TPS](img/post/2018-08-25-PerfTestTraining-TPS.jpg)
 
 ### Error Rate
 

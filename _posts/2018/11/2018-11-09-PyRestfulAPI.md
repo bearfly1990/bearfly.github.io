@@ -56,7 +56,7 @@ PS C:\Users\mayn\Desktop> python ./hello.py
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 ```
-![sample01](https://raw.githubusercontent.com/bearfly1990/bearfly1990.github.io/master/_posts/2018/11/imgs/2018-11-09-PyRestfulAPI-demo01.jpg)
+![sample01](img/post/2018-11-09-PyRestfulAPI-demo01.jpg)
 
 # flask-restful
 

@@ -44,7 +44,7 @@ tags:
 ```
 
 下载的海报如下：
-![Posts](https://raw.githubusercontent.com/bearfly1990/bearfly1990.github.io/master/_posts/2018/08/imgs/2018-08-25-SpiderDouban-PostSamples.jpg)
+![Posts](img/post/2018-08-25-SpiderDouban-PostSamples.jpg)
 
 ## Code
 
