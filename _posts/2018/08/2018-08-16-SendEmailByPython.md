@@ -19,7 +19,7 @@ tags:
 ## 授权码
 
 想利用163的邮箱发送邮件，就需要先开通授权码：
-![permission](img/post/2018-08-16-SendEmailByPython-permission.jpg)
+![permission](/img/post/2018-08-16-SendEmailByPython-permission.jpg)
 
 ## 主要代码
 

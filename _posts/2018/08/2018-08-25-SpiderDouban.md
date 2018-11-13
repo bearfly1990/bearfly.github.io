@@ -44,7 +44,7 @@ tags:
 ```
 
 下载的海报如下：
-![Posts](img/post/2018-08-25-SpiderDouban-PostSamples.jpg)
+![Posts](/img/post/2018-08-25-SpiderDouban-PostSamples.jpg)
 
 ## Code
 

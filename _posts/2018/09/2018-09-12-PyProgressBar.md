@@ -46,7 +46,7 @@ for i in range(50):
     time.sleep(0.2)
 ```
 
-![Demo01](img/post/2018-09-12-PyProgressBar-demo01.gif)
+![Demo01](/img/post/2018-09-12-PyProgressBar-demo01.gif)
 
 ## Demo 02
 
@@ -62,7 +62,7 @@ for i in range(1,61):
     time.sleep(0.2)
 ```
 
-![Demo02](img/post/2018-09-12-PyProgressBar-demo02.gif)
+![Demo02](/img/post/2018-09-12-PyProgressBar-demo02.gif)
 
 ## Demo 03
 
@@ -81,7 +81,7 @@ def viewBar(i):
 viewBar(100)
 ```
 
-![Demo03](img/post/2018-09-12-PyProgressBar-demo03.gif)
+![Demo03](/img/post/2018-09-12-PyProgressBar-demo03.gif)
 
 ## Demo 04
 
@@ -94,7 +94,7 @@ for i in tqdm(range(1, 500), ascii=True):
     sleep(0.01)
 ```
 
-![Demo04](img/post/2018-09-12-PyProgressBar-demo04.gif)
+![Demo04](/img/post/2018-09-12-PyProgressBar-demo04.gif)
 
 ## Demo 05
 
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         view_bar(i, 100)
 ```
 
-![Demo05](img/post/2018-09-12-PyProgressBar-demo05.gif)
+![Demo05](/img/post/2018-09-12-PyProgressBar-demo05.gif)
 
 ## Demo 06
 
@@ -189,7 +189,7 @@ _thread.start_new_thread( monitor_process, ("Thread-1", 2, ) )
 start_import()
 ```
 
-![Demo06](img/post/2018-09-12-PyProgressBar-demo06.gif)
+![Demo06](/img/post/2018-09-12-PyProgressBar-demo06.gif)
 
 更多信息可以参考：
 
