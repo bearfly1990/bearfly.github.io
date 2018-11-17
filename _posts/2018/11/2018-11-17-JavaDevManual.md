@@ -77,10 +77,10 @@ c.g. public abstract void commit();
 - 接口和实现类的命名有两套规则： 
     - 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部的实现类用以 Impl 后缀与接口区别。`e.g. CacheServiceImpl实现CacheService接口` 
     - 【推荐】如果是形容能力的接口名称，取对应的形容词为接口名（通常是-able 的形式）。`e.g. AbstractTranslator 实现 Translatable`
+
 #### 参考
 
 - 枚举类名建议带上 Enum 后缀，枚举成员名称需要全大写， 单词间用下画线隔开。
-
 ```
 枚举其实就是特殊的常量类，且构造方法被默认强制为私有。
 e.g.枚举名字为ProcessStatusEnum的成员名称：SUCCESS / UNKNOWN_REASON
@@ -112,7 +112,6 @@ e.g.枚举名字为ProcessStatusEnum的成员名称：SUCCESS / UNKNOWN_REASON
 - 不要使用一个常量类维护所有常量，要按常量功能进行归类，分开维护。
 - 常量的复用层次有 5 层：跨应用共享常量、应用内共享常量、子工程内共享常量、包内共享常量、类内共享常量。 - 跨应用共享常量：放置在二方库中，通常是在 client.jar 中的 constant 目录下。 - 应用内共享常量：旋转在一方库中，通常是在子模块中的 constant 目录下。 - 子工程内部共享常量：即在当前子工程的 constant 目录下。 - 包内共享常量：即在当前包下单独的 constant 目录下。 - 类内共享常量：直接在类内部以`private static final`的方式定义。
 - 如果变量值仅在一个范围内变化，则用 enum 类型来定义。如果存在名称之外的延伸属性，则使用 enum 类型，下面正例的数字就是延伸信息，表示一年中的第几个季节。
-
 ```
 public enum SeasonEnum {
     SPRINT(1), SUMMER(2), AUTUMN(3), WINTER(4);
@@ -300,12 +299,13 @@ keySet 其实遍历了2次，一次是转为Iterator对象，
 
 - 高度注意`Map`类集合 K/V 能不能存储 null 值的情况
 
-  | 集合类            | Key     | Value   | Super       | Comment               |
-  | ----------------- | ------- | ------- | ----------- | --------------------- |
-  | Hashtable         | no null | no null | Dictionary  | Thread Safe           |
-  | ConcurrentHashMap | no null | no null | AbstractMap | 锁分段技术 (JDK8:CAS) |
-  | TreeMap           | no null | null    | AbstractMap | Thread Unsafe         |
-  | HashMap           | null    | null    | AbstractMap | Thread Unsafe         |
+| 集合类            | Key     | Value   | Super       | Comment               |
+| ----------------- | ------- | ------- | ----------- | --------------------- |
+| Hashtable         | no null | no null | Dictionary  | Thread Safe           |
+| ConcurrentHashMap | no null | no null | AbstractMap | 锁分段技术 (JDK8:CAS) |
+| TreeMap           | no null | null    | AbstractMap | Thread Unsafe         |
+| HashMap           | null    | null    | AbstractMap | Thread Unsafe         |
+
 ```
 由于HashMap的干扰，很多人认为ConcurrentHashMap是可以置入null值的，而事实上，存储null值会抛出NPE异常
 ```
