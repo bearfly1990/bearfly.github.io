@@ -246,7 +246,10 @@ c.g. `POJO`类的gmtCreate默认值为 new Date();
 
 #### 强制
 
-- 关于`hashCode` 和`equals`的处理，遵循如下规则： - 只要重写 equals, 就必须重写 hashCode。 - 因为 `Set`存储的是不重复的对象，依据 hashCode 和 equals 进行判断，所以 Set 存储的对象必须重写这两种方法。 - 如果自定义对象作为`Map`的键，那么必须重写 hashCode 和 equals。
+- 关于`hashCode` 和`equals`的处理，遵循如下规则： 
+- 只要重写 equals, 就必须重写 hashCode。 
+- 因为 `Set`存储的是不重复的对象，依据 hashCode 和 equals 进行判断，所以 Set 存储的对象必须重写这两种方法。 
+- 如果自定义对象作为`Map`的键，那么必须重写 hashCode 和 equals。
 - `ArrayList`的`subList`结果不可强转成`ArrayList`, 否则会抛出`ClassCastExcpetion`异常，即
 ```
 java.util.RandomAccessSubList cannot be cast to java.util.ArrayList`
