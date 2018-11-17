@@ -45,7 +45,8 @@ e.g. int[] arrayDemo;
 - POJO 类中布尔类型的变量都不要加 is 前缀，否则部分框架解析会引起序列化错误。
 
 ```
-e.g. Boolean isDeleted, it's method is isDeleted(), Error happened when RPC Framwork try to get property name deleted)
+e.g. Boolean isDeleted, it's method is isDeleted(), 
+Error happened when RPC Framwork try to get property name deleted)
 ```
 
 - 包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，则类名可以使用复数形式。
@@ -81,7 +82,9 @@ c.g. public abstract void commit();
 如果JDK8中接口允许有默认实现，那么这个default方法，是对所有实现类都有价值的默认实现。
 ```
 
-- 接口和实现类的命名有两套规则： - 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部的实现类用以 Impl 后缀与接口区别。`e.g. CacheServiceImpl实现CacheService接口` - 【推荐】如果是形容能力的接口名称，取对应的形容词为接口名（通常是-able 的形式）。`e.g. AbstractTranslator 实现 Translatable`
+- 接口和实现类的命名有两套规则： 
+    - 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部的实现类用以 Impl 后缀与接口区别。`e.g. CacheServiceImpl实现CacheService接口` 
+    - 【推荐】如果是形容能力的接口名称，取对应的形容词为接口名（通常是-able 的形式）。`e.g. AbstractTranslator 实现 Translatable`
 
 #### 参考
 
@@ -92,7 +95,19 @@ c.g. public abstract void commit();
 e.g.枚举名字为ProcessStatusEnum的成员名称：SUCCESS / UNKNOWN_REASON
 ```
 
-- 各层命名规约： - Service/DAO 层方法命名规约如下： - 获取单个对象的方法用 get 作为前缀。 - 获取多个对象的方法用 list 作为前缀。 - 获取统计值的方法用 count 作为前缀。 - 插入的方法用 sava / insert 作为前缀。 - 删除的方法用 remove / delete 作为前缀。 - 修改的方法用 update 作为前缀 - 领域模型命名规约如下: - 数据对象： xxxDO, xxx 为数据表名。 - 数据传输对象： xxxDTO, xxx 为业务领域相关的名称。 - 展示对象： xxxVO, xxx 一般为网页名称。 - `POJO` 是 DO/DTO/BO/VO 的统称，禁止命名成 xxx`POJO`。
+- 各层命名规约：
+  - Service/DAO 层方法命名规约如下：
+    - 获取单个对象的方法用 get 作为前缀。
+    - 获取多个对象的方法用 list 作为前缀。
+    - 获取统计值的方法用 count 作为前缀。
+    - 插入的方法用 sava / insert 作为前缀。
+    - 删除的方法用 remove / delete 作为前缀。
+    - 修改的方法用 update 作为前缀
+  - 领域模型命名规约如下:
+    - 数据对象： xxxDO, xxx 为数据表名。
+    - 数据传输对象： xxxDTO, xxx 为业务领域相关的名称。
+    - 展示对象： xxxVO, xxx 一般为网页名称。
+    - `POJO` 是 DO/DTO/BO/VO 的统称，禁止命名成 xxx`POJO`。
 
 ### 1.2 常量定义
 
@@ -121,7 +136,12 @@ public enum SeasonEnum {
 
 #### 强制
 
-- 大括号的使用约定。如果大括号内为空，则简洁地写成{}即可，也不需要换行；如果是非空代码，则： - 左大括号前不换行。 - 左大括号后换行。 - 右大括号前换行。 - 右大括号后还有 else 等代码刚不换行；表示终止的右大括号必须换行。
+- 大括号的使用约定。如果大括号内为空，则简洁地写成{}即可，也不需要换行；如果是非空代码，则： 
+    - 左大括号前不换行。 
+    - 左大括号后换行。 
+    - 右大括号前换行。 
+    - 右大括号后还有 else 等代码刚不换行；
+- 表示终止的右大括号必须换行。
 - 左小括号和字符之间不出现空格；同样，右小括号和字符之间也不出现空格。
 - if / for / while / switch / do 等保留字与括号之间都必须加上空格。
 - 任何二目、三目运算符的左右两边都需要加一个空格。采用 4 个空格缩进，禁止使用 Tab 控制符。
@@ -131,25 +151,30 @@ public enum SeasonEnum {
 public static void main(String[] args){
     // 缩进4个空格
     String say = "hello";
-	// 运算符的左右必须有1个空格
-	int flag = 0;
-	// 关键字 if 与括号之间必须有 1 个空格，
-	// 括号内的 f 与左括号、0 与右括号之间不需要空格
-	if (flag == 0) {
+    // 运算符的左右必须有1个空格
+    int flag = 0;
+    // 关键字 if 与括号之间必须有 1 个空格，
+    // 括号内的 f 与左括号、0 与右括号之间不需要空格
+    if (flag == 0) {
         System.out.println(say);
-	}
-	// 左大括号前加空格且不换行；左大括号后换行
-	if (flag == 1) ｛
-		System.out.println("world");
-	// 右大括号前换行，右大括号后有else，不用换行
-	} else {
+    }
+    // 左大括号前加空格且不换行；左大括号后换行
+    if (flag == 1) ｛
+        System.out.println("world");
+    // 右大括号前换行，右大括号后有else，不用换行
+    } else {
         System.out.println("ok");
     // 在右大括号后直接结束，则必须换行
-	}
+    }
 }
 ```
 
-- 单行字符数不超过 120 个，超出则需要换行，换行是遵循如下原则： - 第二行相对第一行缩进 4 个空格，从第三行开始，不再持续缩进，参考示例。 - 运算符与下文一起换行。 - 方法调用的点符号与下方一起换行。 - 方法调用中的多个参数需要换行时，在逗号后进行。 - 在括号前不要换行。
+- 单行字符数不超过 120 个，超出则需要换行，换行是遵循如下原则： 
+    - 第二行相对第一行缩进 4 个空格，从第三行开始，不再持续缩进，参考示例。 
+    - 运算符与下文一起换行。 
+    - 方法调用的点符号与下方一起换行。 
+    - 方法调用中的多个参数需要换行时，在逗号后进行。 
+    - 在括号前不要换行。
 
 ```
 StringBuffer sb = new StringBuffer();
@@ -196,14 +221,23 @@ c.g. object.equest("test");
 - 所有相同类型的包装类对象之间值的比较，全部使用 equals 方法。
 
 ```
-对于 Integer var = ? 在 - 128~127范围内的赋值， Integer 对象是在IntegerCache.cache中产生 的。会复用已有对象， 这个区间内的Integer值可以直接使用 == 进行判断， 但是这个区间外的所有数据， 都会在堆上产生， 并不会利用已有对象。这是个大坑，推荐使用equals方法进行判断。
+对于 Integer var = ? 在 - 128~127范围内的赋值， 
+Integer 对象是在IntegerCache.cache中产生 的。
+会复用已有对象， 这个区间内的Integer值可以直接使用 == 进行判断， 
+但是这个区间外的所有数据， 都会在堆上产生，
+并不会利用已有对象。这是个大坑，推荐使用equals方法进行判断。
 ```
 
-- 关于基本数据类型与包装数据类型的使用标准如下： - 【强制】所有的`POJO`类属性必须使用包装数据类型。 - 【强制】RPC 方法的返回值和参数必须使用包装数据类型。 - 【推荐】所有的局部变量使用基本数据类型。
+- 关于基本数据类型与包装数据类型的使用标准如下：
+  - 【强制】所有的`POJO`类属性必须使用包装数据类型。
+  - 【强制】RPC 方法的返回值和参数必须使用包装数据类型。
+  - 【推荐】所有的局部变量使用基本数据类型。
 - 在定义 DO/DTO/VO 等 `POJO`类时，不要设定任何属性默认值。
 
 ```
-c.g. `POJO`类的gmtCreate默认值为 new Date();但是这个属性在数据提取时并没有置入具体值，在更新其它字段时又附带更新了此字段，导致创建时间被修改成当前时间。
+c.g. `POJO`类的gmtCreate默认值为 new Date();
+但是这个属性在数据提取时并没有置入具体值，
+在更新其它字段时又附带更新了此字段，导致创建时间被修改成当前时间。
 ```
 
 - 当序列化类新增属性时，请不要修改`serialVersionUID`字段，以避免反序列失败；如果完全不兼容升级， 避免反序列化混乱，那么请修改`serialVersionUID`值
@@ -242,7 +276,8 @@ java.util.RandomAccessSubList cannot be cast to java.util.ArrayList`
 - 在使用工具类`Arrays.asList()`把数组转换成集合时，不能使用其修改集合相关的方法，它的`add`/`remove`/`clear`方法会抛出`UnsupportedOperationException`异常。
 
 ```
-asList 的返回对象是一个Arrays内部类，并没有实现集合的修改方法。Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。
+asList 的返回对象是一个Arrays内部类，并没有实现集合的修改方法。
+Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。
 String[] strs = new String[] {"you", "are"};
 List list = Arrays.asList(strs);
 scenario 1: list.add("chenxiong") 运行时异常。
@@ -253,8 +288,8 @@ scenario 2: 如果 str[0] = "xiche"; 那么list.get(0)也会随之修改。
 
 ```
 扩展说一下 PECS(Producer Extends Consumer Super)原则：
-	第一，频繁往外读取内容的，适合用<? extends T>;
-	第二，经常往里插入的，适合用<? super T>。
+    第一，频繁往外读取内容的，适合用<? extends T>;
+    第二，经常往里插入的，适合用<? super T>。
 ```
 
 - 不要在`foreach`循环里进行元素的`remove`/`add`操作。remove 元素请用 `Iterator`方式，如果并发操作，需要对 Iterator 对象加锁。
@@ -262,16 +297,16 @@ scenario 2: 如果 str[0] = "xiche"; 那么list.get(0)也会随之修改。
 
 ```
 三个条件如下：
-	1) x, y 的比较结果和y, x的比较结果相反。
-	2) x>y, y>z, 则 x>z。
-	3) x=y, 则x, z 比较结果和y, z比较结果相同
+    1) x, y 的比较结果和y, x的比较结果相反。
+    2) x>y, y>z, 则 x>z。
+    3) x=y, 则x, z 比较结果和y, z比较结果相同
 c.g. 下例中没有处理相等的情况，交换两个对象判断结果并不互反，不符合第一个条件，在实际使用中可能会出现异常。
-	new Comparator<Student>(){
+    new Comparator<Student>(){
         @Override
         public int compare(Student o1, Student o2){
             return 01.getId() > o2.getId() ? 1:-1;
         }
-	}
+    }
 ```
 
 #### 推荐
@@ -280,7 +315,9 @@ c.g. 下例中没有处理相等的情况，交换两个对象判断结果并不
 - 使用`entrySet`遍历`Map`类集合 K/V， 而不是用 keySet 方式遍历。
 
 ```
-keySet 其实遍历了2次，一次是转为Iterator对象，另一次是从hashMap中取出key反对应的value。如果是JDK8，使用Map.foreach方法。
+keySet 其实遍历了2次，一次是转为Iterator对象，
+另一次是从hashMap中取出key反对应的value。
+如果是JDK8，使用Map.foreach方法。
 ```
 
 - 高度注意`Map`类集合 K/V 能不能存储 null 值的情况
@@ -301,7 +338,8 @@ keySet 其实遍历了2次，一次是转为Iterator对象，另一次是从hash
 - 合理利用集合的有序性(sort)和稳定性(order)，避免集合的无序性(unsort)和不稳定性(unorder)带来的负面影响。
 
 ```
-有序性批遍历的结果是按某种比较规则依次排列的。稳定性指的是集合每次遍历的元素次序是一定的。如：
+有序性批遍历的结果是按某种比较规则依次排列的。
+稳定性指的是集合每次遍历的元素次序是一定的。如：
 ArrayList 是 order/unsort;
 HashMap 是unorder/unsort;
 TreeSet 是order/sort.
