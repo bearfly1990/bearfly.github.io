@@ -29,27 +29,23 @@ tags:
 - 类名使用 UpperCamelCamel 风格， 但 DO/BO/DTO/VO/AO/PO 等情形例外。
 - 方法名、参数名、成员变量 、局部变量都统一使用 lowerCamelCase 风格，必须遵从驼峰的形式。
 - 常量命名全部大写，单词间用下画线隔开，力求语义表达完整清楚，不要嫌名字长。
-
 ```
 e.g. MAX_STOCK_COUNT / PRIZE_NUMBER_EVERYDAY
 ```
 
 - 抽象类名使用 Abstract 或 Base 开头；异常类使用 Exception 结尾；测试类命名要以它测试的类名开始，以 Test 结尾。
 - 类型与中括号之间无空格相连定义数组。
-
 ```
 e.g. int[] arrayDemo;
 ```
 
 - POJO 类中布尔类型的变量都不要加 is 前缀，否则部分框架解析会引起序列化错误。
-
 ```
 e.g. Boolean isDeleted, it's method is isDeleted(), 
 Error happened when RPC Framwork try to get property name deleted)
 ```
 
 - 包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，则类名可以使用复数形式。
-
 ```
 e.g. com.alibaba.ai.util.MessageUtils
 ```
@@ -59,13 +55,11 @@ e.g. com.alibaba.ai.util.MessageUtils
 #### 【推荐】
 
 - 为了达到代码自解释的目标，任何自定义编程元素在命名时，使用尽量完整的单词组合来表达其意。
-
 ```
 e.g 在JDK中，对某个对象引用的volatile字段进行原子更新的类名为： AtomicReferenceFieldUpdater。
 ```
 
 - 如果模块、接口、类、方法使用了设计模式 ，应在命名时体现出具体模式。
-
 ```
 public class OrderFactory;
 public class LoginProxy;
@@ -73,7 +67,6 @@ public class ResourceObserver;
 ```
 
 - 接口类中的方法和属性不要加任何修饰符号(public 也不要加)， 保持代码的简洁性，并加上有效的 Javadoc 注释。尽量不要在接口里定义变量，如果一定要定义变量，必须是与接口方法相关的，并且是整个应用的基础常量。
-
 ```
 接口方法签名：void commit();
 接口基础常量：String COMPANY = "alibaba";
@@ -84,7 +77,6 @@ c.g. public abstract void commit();
 - 接口和实现类的命名有两套规则： 
     - 【强制】对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部的实现类用以 Impl 后缀与接口区别。`e.g. CacheServiceImpl实现CacheService接口` 
     - 【推荐】如果是形容能力的接口名称，取对应的形容词为接口名（通常是-able 的形式）。`e.g. AbstractTranslator 实现 Translatable`
-
 #### 参考
 
 - 枚举类名建议带上 Enum 后缀，枚举成员名称需要全大写， 单词间用下画线隔开。
@@ -145,7 +137,6 @@ public enum SeasonEnum {
 - if / for / while / switch / do 等保留字与括号之间都必须加上空格。
 - 任何二目、三目运算符的左右两边都需要加一个空格。采用 4 个空格缩进，禁止使用 Tab 控制符。
 - 注释的双斜线与注释内容之间有且仅有一个空格。
-
 ```
 public static void main(String[] args){
     // 缩进4个空格
@@ -174,7 +165,6 @@ public static void main(String[] args){
     - 方法调用的点符号与下方一起换行。 
     - 方法调用中的多个参数需要换行时，在逗号后进行。 
     - 在括号前不要换行。
-
 ```
 StringBuffer sb = new StringBuffer();
 sb.append("you ").append("are ")...
@@ -183,7 +173,6 @@ sb.append("you ").append("are ")...
 ```
 
 - 方法参数在定义和传入时，多个参数逗号后面必须加空格。
-
 ```
 method("one", "two", "three");
 ```
@@ -202,7 +191,6 @@ method("one", "two", "three");
 - 避免通过一个类的对象引用访问此类的静态变量或静态方法，造成无谓增加编译器解析成本，直接用类名来访问即可。
 - 所以的覆写方法，必须加`@Override`注解
 - 相同参数类型，相同业务含义，才可以使用 Java 的可变参数，避免使用 Object。
-
 ```
 可变参数必须放置在参数列表的最后（建议工程师们尽量不用可变参数编程）。
 public User listUsers(String type, Long... ids){...}
@@ -211,14 +199,12 @@ public User listUsers(String type, Long... ids){...}
 - 对外部正在调用或者二方库依赖的接口，不允许修改方法接口，以避免对接口调用方产生影响。若接口过时，必须加 `@Deprecated`注解，并清晰地说明采用的新接口或者新服务是什么。
 - 不能使用过时的类或方法。
 - Object 的 equals 方法容易抛空指针，应使用常量或者确定有值的对象来调用 equals。
-
 ```
 e.g. "test".equals(object)
 c.g. object.equest("test");
 ```
 
 - 所有相同类型的包装类对象之间值的比较，全部使用 equals 方法。
-
 ```
 对于 Integer var = ? 在 - 128~127范围内的赋值， 
 Integer 对象是在IntegerCache.cache中产生 的。
@@ -232,7 +218,6 @@ Integer 对象是在IntegerCache.cache中产生 的。
   - 【强制】RPC 方法的返回值和参数必须使用包装数据类型。
   - 【推荐】所有的局部变量使用基本数据类型。
 - 在定义 DO/DTO/VO 等 `POJO`类时，不要设定任何属性默认值。
-
 ```
 c.g. `POJO`类的gmtCreate默认值为 new Date();
 但是这个属性在数据提取时并没有置入具体值，
@@ -240,7 +225,6 @@ c.g. `POJO`类的gmtCreate默认值为 new Date();
 ```
 
 - 当序列化类新增属性时，请不要修改`serialVersionUID`字段，以避免反序列失败；如果完全不兼容升级， 避免反序列化混乱，那么请修改`serialVersionUID`值
-
 ```
 注意`serialVersionUID`不一致会抛出序列化运行时异常。
 ```
@@ -265,7 +249,6 @@ c.g. `POJO`类的gmtCreate默认值为 new Date();
 
 - 关于`hashCode` 和`equals`的处理，遵循如下规则： - 只要重写 equals, 就必须重写 hashCode。 - 因为 `Set`存储的是不重复的对象，依据 hashCode 和 equals 进行判断，所以 Set 存储的对象必须重写这两种方法。 - 如果自定义对象作为`Map`的键，那么必须重写 hashCode 和 equals。
 - `ArrayList`的`subList`结果不可强转成`ArrayList`, 否则会抛出`ClassCastExcpetion`异常，即
-
 ```
 java.util.RandomAccessSubList cannot be cast to java.util.ArrayList`
 ```
@@ -273,7 +256,6 @@ java.util.RandomAccessSubList cannot be cast to java.util.ArrayList`
 - 在`subList`场景中，高度注意对原集合元素个数的修改，会导致子列表的遍历、增加、删除均产生`ConcurrentModificationException`异常。
 - 使用集合转数组的方法，必须使用集合的`toArray(T[] array)`，传入的是类型完全一样的数据，大小就是 list.size()。
 - 在使用工具类`Arrays.asList()`把数组转换成集合时，不能使用其修改集合相关的方法，它的`add`/`remove`/`clear`方法会抛出`UnsupportedOperationException`异常。
-
 ```
 asList 的返回对象是一个Arrays内部类，并没有实现集合的修改方法。
 Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。
@@ -284,7 +266,6 @@ scenario 2: 如果 str[0] = "xiche"; 那么list.get(0)也会随之修改。
 ```
 
 - 泛型通配符`<? extends T>`用来接收返回的数据，此写法的泛型集合不能使用 add 方法，而`<? super T>`不能使用 get 方法， 因为 其作为接口调用赋值时易出错。
-
 ```
 扩展说一下 PECS(Producer Extends Consumer Super)原则：
     第一，频繁往外读取内容的，适合用<? extends T>;
@@ -293,7 +274,6 @@ scenario 2: 如果 str[0] = "xiche"; 那么list.get(0)也会随之修改。
 
 - 不要在`foreach`循环里进行元素的`remove`/`add`操作。remove 元素请用 `Iterator`方式，如果并发操作，需要对 Iterator 对象加锁。
 - 在 JDK7 及以上版本中， `Comparator`要满足如下三个条件，不然`Arrays.sort`, `Collections.sort`会报`IllegalArgumentException`异常。
-
 ```
 三个条件如下：
     1) x, y 的比较结果和y, x的比较结果相反。
@@ -312,7 +292,6 @@ c.g. 下例中没有处理相等的情况，交换两个对象判断结果并不
 
 - 在集合初始化时，指定集合初始值大小。
 - 使用`entrySet`遍历`Map`类集合 K/V， 而不是用 keySet 方式遍历。
-
 ```
 keySet 其实遍历了2次，一次是转为Iterator对象，
 另一次是从hashMap中取出key反对应的value。
@@ -327,7 +306,6 @@ keySet 其实遍历了2次，一次是转为Iterator对象，
   | ConcurrentHashMap | no null | no null | AbstractMap | 锁分段技术 (JDK8:CAS) |
   | TreeMap           | no null | null    | AbstractMap | Thread Unsafe         |
   | HashMap           | null    | null    | AbstractMap | Thread Unsafe         |
-
 ```
 由于HashMap的干扰，很多人认为ConcurrentHashMap是可以置入null值的，而事实上，存储null值会抛出NPE异常
 ```
@@ -335,7 +313,6 @@ keySet 其实遍历了2次，一次是转为Iterator对象，
 #### 参考
 
 - 合理利用集合的有序性(sort)和稳定性(order)，避免集合的无序性(unsort)和不稳定性(unorder)带来的负面影响。
-
 ```
 有序性批遍历的结果是按某种比较规则依次排列的。
 稳定性指的是集合每次遍历的元素次序是一定的。如：
