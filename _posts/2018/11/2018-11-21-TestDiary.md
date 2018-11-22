@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Test Diary 20181121
-subtitle: Summary the recent test case
+title: Test Diary #01
+subtitle: Summarize the test case I met yesterday
 date: 2018-11-21
 author: BF
 header-img: img/bf/wall_01.jpg
