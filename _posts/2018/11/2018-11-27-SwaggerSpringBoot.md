@@ -106,7 +106,7 @@ tags:
 <plugin>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-maven-plugin</artifactId>
-    <configuration
+    <configuration>
         <fork>true</fork>
     </configuration>
 </plugin>
@@ -210,13 +210,13 @@ public class EWordController {
 
 # 生成文档
 
-上面的配置与代码完成后，直接启动 SpringBoot，访问：http://localhost:8080/swagger-ui.html 就能查看文档了。
+上面的配置与代码完成后，直接启动 SpringBoot，访问：[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 就能查看文档了。
 
 ![swagger-ui](/img/post/2018/11/2018-11-27-SwaggerSpringBoot.jpg)
 
 搞定~
 
-工程目录：https://github.com/bearfly1990/PowerScript/tree/master/Java/Swagger
+工程目录：[https://github.com/bearfly1990/PowerScript/tree/master/Java/Swagger](https://github.com/bearfly1990/PowerScript/tree/master/Java/Swagger)
 
 ---
 
