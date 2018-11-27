@@ -57,7 +57,7 @@ PS C:\Users\mayn\Desktop> python ./hello.py
 
 ```
 
-![sample01](/img/post/2018-11-09-PyRestfulAPI-demo01.jpg)
+![sample01](/img/post/2018/11/2018-11-09-PyRestfulAPI-demo01.jpg)
 
 # flask-restful
 
