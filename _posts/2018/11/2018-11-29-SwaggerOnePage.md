@@ -19,8 +19,10 @@ tags:
 - [spectacle](https://github.com/sourcey/spectacle)
 - [bootprint-openapi](https://github.com/bootprint/bootprint-openapi)
 - [html-inline](https://github.com/substack/html-inline) (把 html,js,css 整合到一个 html 中)
-  
-他们都是基于 Node.js 的，所以要先安装较新版的node.js(v10)，下面分别来介绍下怎么使用。
+
+他们都是基于 Node.js 的，所以要先安装较新版的 node.js(v10)，下面分别来介绍下怎么使用。
+
+在下面打开的一些完整示例的时候，除 pretty-swag 外都是支持手机端的，不过在电脑上的效果最好。
 
 # [pretty-swag](https://github.com/twskj/pretty-swag)
 
