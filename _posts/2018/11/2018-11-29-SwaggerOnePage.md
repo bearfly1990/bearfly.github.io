@@ -19,7 +19,8 @@ tags:
 - [spectacle](https://github.com/sourcey/spectacle)
 - [bootprint-openapi](https://github.com/bootprint/bootprint-openapi)
 - [html-inline](https://github.com/substack/html-inline) (把 html,js,css 整合到一个 html 中)
-  他们都是基于 Node.js 的，下面分别来介绍下怎么使用。
+  
+他们都是基于 Node.js 的，所以要先安装较新版的node.js(v10)，下面分别来介绍下怎么使用。
 
 # [pretty-swag](https://github.com/twskj/pretty-swag)
 
@@ -35,7 +36,7 @@ pretty-swag -i input.json -o output.html
 最后的样子如下，完整示例在[这里](https://bearfly1990.github.io/apidoc/swagger/pretty-swagger.html)：
 ![pretty-swag](/img/post/2018/11/2018-11-29-SwaggerOnePage_01.jpg)
 
-# (https://github.com/sourcey/spectacle)
+# [spectacle](https://github.com/sourcey/spectacle)
 
 spectacle 最后的样式我个人觉得还是不错的，不过貌似 leader 不是很喜欢。
 
