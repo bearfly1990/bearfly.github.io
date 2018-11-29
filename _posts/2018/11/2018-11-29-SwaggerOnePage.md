@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Swagger in One
+title: Swagger In One Page
 subtitle: Generate RESTful API documentation by swagger and springboot
 date: 2018-11-29
 author: BF
