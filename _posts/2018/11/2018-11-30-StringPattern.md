@@ -11,6 +11,13 @@ tags:
   - algorithms
 ---
 
+# Change Log
+
+| Date       | Author      | Version | Description                            |
+| :--------- | :---------- | :------ | :------------------------------------- |
+| 11/30/2018 | bearfly1990 | 1.0.0   | set up                                 |
+| 12/01/2018 | bearfly1990 | 1.0.1   | improve code logic, make it more clear |
+
 # 背景
 
 今天遇到的一个算法问题，感觉又回到了当年做 ACM 的时候，不过好久没动脑，不好使了，哈哈哈。
@@ -113,15 +120,13 @@ public class AlgorithmsImpl implements IAlgorithms {
 					// it means the patternEntry have maped a word but current word is not expected.
 					return false;
 				}
-			} else if (!matchedMap.containsKey(patternEntry)) {
-				if (matchedMap.containsValue(wordEntry)) {
-					// it means the current patternEntry match a word belong to other patternEntry.
-					// so that's not ok.
-					return false;
-				} else {
-					// the first time to map it.
-					matchedMap.put(patternEntry, wordEntry);
-				}
+			} else if (matchedMap.containsValue(wordEntry)) {
+				// it means the current patternEntry match a word belong to other patternEntry.
+				// so that's not ok.
+				return false;
+			} else {
+				// the first time to map it.
+				matchedMap.put(patternEntry, wordEntry);
 			}
 		}
 		return true;
@@ -149,21 +154,20 @@ public boolean matchPattern2(String input, String pattern) {
 	for (int i = 0; i < patternArray.length; i++) {
 		String patternEntry = patternArray[i];
 		String wordEntry = wordArray[i];
-		if(wordEntry.startsWith("**")) {
-			if(!wordEntry.equals(patternEntry)) {
+		if (wordEntry.startsWith("**")) {
+			if (!wordEntry.equals(patternEntry)) {
 				return false;
 			}
-		}else {
-			if(patternEntry.startsWith("**")) {
-				return false;
+		} else if (patternEntry.startsWith("**")) {
+			return false;
+		}
+
+		for (int j = i; j < patternArray.length; j++) {
+			if (wordArray[j].equals(wordEntry)) {
+				wordArray[j] = "**" + patternEntry;
 			}
-			for(int j = i; j < patternArray.length; j++) {
-				if(wordArray[j].equals(wordEntry)) {
-					wordArray[j] = "**" + patternEntry;
-				}
-				if(patternArray[j].equals(patternEntry)) {
-					patternArray[j] = "**" + patternEntry;
-				}
+			if (patternArray[j].equals(patternEntry)) {
+				patternArray[j] = "**" + patternEntry;
 			}
 		}
 	}
