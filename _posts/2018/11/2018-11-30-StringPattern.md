@@ -131,7 +131,7 @@ public class AlgorithmsImpl implements IAlgorithms {
 
 ```
 
-其实除了上面的方法，还有另一个办法，其实本质上还是一样的，测试也通过了：
+其实除了上面的方法，还有另一个办法，但本质上还是一样的，测试也通过了：
 
 ```java
 public boolean matchPattern2(String input, String pattern) {
