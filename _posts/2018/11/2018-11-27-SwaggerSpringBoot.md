@@ -216,7 +216,7 @@ public class EWordController {
 
 搞定~
 
-工程目录：[https://github.com/bearfly1990/PowerScript/tree/master/Java/Swagger](https://github.com/bearfly1990/PowerScript/tree/master/Java/Swagger)
+工程目录：[https://github.com/bearfly1990/PowerScript/tree/master/Java/workspace/swagger](https://github.com/bearfly1990/PowerScript/tree/master/Java/workspace/swagger)
 
 ---
 
