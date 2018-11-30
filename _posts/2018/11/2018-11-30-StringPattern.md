@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Learn Diary (01)
-subtitle: Questions meet today about algorithms
+title: String Pattern
+subtitle: A algorithms problem about mathing by pattern
 date: 2018-11-30
 author: BF
 header-img: img/bf/beach_05.jpg
