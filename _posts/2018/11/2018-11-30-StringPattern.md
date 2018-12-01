@@ -11,13 +11,6 @@ tags:
   - algorithms
 ---
 
-# Change Log
-
-| Date       | Author      | Version | Description                            |
-| :--------- | :---------- | :------ | :------------------------------------- |
-| 11/30/2018 | bearfly1990 | 1.0.0   | set up                                 |
-| 12/01/2018 | bearfly1990 | 1.0.1   | improve code logic, make it more clear |
-
 # 背景
 
 今天遇到的一个算法问题，感觉又回到了当年做 ACM 的时候，不过好久没动脑，不好使了，哈哈哈。
@@ -35,19 +28,19 @@ tags:
 package org.bearfly.fun.javalearn.algorithms;
 
 public interface IAlgorithms {
-	/**
-	 * <p>This is the definition to check input string could match pattern or not<p>
-	 * <p>example:</p>
-	 * <p>matched: input = "java hello world", pattern = "ABC"</p>
-	 * <p>matched: input = "java hello java hello", pattern = "ABAB"</p>
-	 * <p>unmatch: input = "java hello java", pattern = "ABC"</p>
-	 * <p>unmatch: input = "java hello", pattern = "ABC"</p>
-	 * <p>...</p>
-	 * @param input
-	 * @param pattern
-	 * @return boolean inputStr could match patter or not
-	 */
-	public boolean matchPattern(String input, String pattern);
+    /**
+     * <p>This is the definition to check input string could match pattern or not<p>
+     * <p>example:</p>
+     * <p>matched: input = "java hello world", pattern = "ABC"</p>
+     * <p>matched: input = "java hello java hello", pattern = "ABAB"</p>
+     * <p>unmatch: input = "java hello java", pattern = "ABC"</p>
+     * <p>unmatch: input = "java hello", pattern = "ABC"</p>
+     * <p>...</p>
+     * @param input
+     * @param pattern
+     * @return boolean inputStr could match patter or not
+     */
+    public boolean matchPattern(String input, String pattern);
 }
 ```
 
@@ -66,13 +59,13 @@ public interface IAlgorithms {
 package org.bearfly.fun.javalearn.utils;
 
 public class StringUtils {
-	public static String[] arrayCharToStr(char[] charArray) {
-		String[] newStrArray = new String[charArray.length];
-		for(int i = 0; i < charArray.length; i++) {
-			newStrArray[i] = String.valueOf(charArray[i]);
-		}
-		return newStrArray;
-	}
+    public static String[] arrayCharToStr(char[] charArray) {
+        String[] newStrArray = new String[charArray.length];
+        for(int i = 0; i < charArray.length; i++) {
+            newStrArray[i] = String.valueOf(charArray[i]);
+        }
+        return newStrArray;
+    }
 }
 ```
 
@@ -96,41 +89,41 @@ import org.bearfly.fun.javalearn.utils.StringUtils;
 
 public class AlgorithmsImpl implements IAlgorithms {
 
-	@Override
-	public boolean matchPattern(String input, String pattern) {
-		// ["hello", "world", "java"]
-		String[] wordArray = input.split(" ");
-		// ["A","B","C"]
-		String[] patternArray = StringUtils.arrayCharToStr(pattern.toCharArray());
+    @Override
+    public boolean matchPattern(String input, String pattern) {
+        // ["hello", "world", "java"]
+        String[] wordArray = input.split(" ");
+        // ["A","B","C"]
+        String[] patternArray = StringUtils.arrayCharToStr(pattern.toCharArray());
 
-		// if pattern and string num is not matched, no compare any more.
-		// e.g. hello world java ！= AB
-		if (wordArray.length != patternArray.length) {
-			return false;
-		}
+        // if pattern and string num is not matched, no compare any more.
+        // e.g. hello world java ！= AB
+        if (wordArray.length != patternArray.length) {
+            return false;
+        }
 
-		Map<String, String> matchedMap = new HashMap<>();
+        Map<String, String> matchedMap = new HashMap<>();
 
-		for (int i = 0; i < patternArray.length; i++) {
-			String patternEntry = patternArray[i];
-			String wordEntry = wordArray[i];
+        for (int i = 0; i < patternArray.length; i++) {
+            String patternEntry = patternArray[i];
+            String wordEntry = wordArray[i];
 
-			if (matchedMap.containsKey(patternEntry)) {
-				if (!matchedMap.get(patternEntry).equals(wordEntry)) {
-					// it means the patternEntry have maped a word but current word is not expected.
-					return false;
-				}
-			} else if (matchedMap.containsValue(wordEntry)) {
-				// it means the current patternEntry match a word belong to other patternEntry.
-				// so that's not ok.
-				return false;
-			} else {
-				// the first time to map it.
-				matchedMap.put(patternEntry, wordEntry);
-			}
-		}
-		return true;
-	}
+            if (matchedMap.containsKey(patternEntry)) {
+                if (!matchedMap.get(patternEntry).equals(wordEntry)) {
+                    // it means the patternEntry have maped a word but current word is not expected.
+                    return false;
+                }
+            } else if (matchedMap.containsValue(wordEntry)) {
+                // it means the current patternEntry match a word belong to other patternEntry.
+                // so that's not ok.
+                return false;
+            } else {
+                // the first time to map it.
+                matchedMap.put(patternEntry, wordEntry);
+            }
+        }
+        return true;
+    }
 
 }
 
@@ -140,38 +133,38 @@ public class AlgorithmsImpl implements IAlgorithms {
 
 ```java
 public boolean matchPattern2(String input, String pattern) {
-	// ["hello", "world", "java"]
-	String[] wordArray = input.split(" ");
-	// ["A","B","C"]
-	String[] patternArray = StringUtils.arrayCharToStr(pattern.toCharArray());
+    // ["hello", "world", "java"]
+    String[] wordArray = input.split(" ");
+    // ["A","B","C"]
+    String[] patternArray = StringUtils.arrayCharToStr(pattern.toCharArray());
 
-	// if pattern and string num is not matched, no compare any more.
-	// e.g. hello world java ！= AB
-	if (wordArray.length != patternArray.length) {
-		return false;
-	}
+    // if pattern and string num is not matched, no compare any more.
+    // e.g. hello world java ！= AB
+    if (wordArray.length != patternArray.length) {
+        return false;
+    }
 
-	for (int i = 0; i < patternArray.length; i++) {
-		String patternEntry = patternArray[i];
-		String wordEntry = wordArray[i];
-		if (wordEntry.startsWith("**")) {
-			if (!wordEntry.equals(patternEntry)) {
-				return false;
-			}
-		} else if (patternEntry.startsWith("**")) {
-			return false;
-		}
-
-		for (int j = i; j < patternArray.length; j++) {
-			if (wordArray[j].equals(wordEntry)) {
-				wordArray[j] = "**" + patternEntry;
-			}
-			if (patternArray[j].equals(patternEntry)) {
-				patternArray[j] = "**" + patternEntry;
-			}
-		}
-	}
-	return true;
+    for (int i = 0; i < patternArray.length; i++) {
+        String patternEntry = patternArray[i];
+        String wordEntry = wordArray[i];
+        if (wordEntry.startsWith("**")) {
+            if (!wordEntry.equals(patternEntry)) {
+                return false;
+            }
+        } else if (patternEntry.startsWith("**")) {
+            return false;
+        }
+        
+        for (int j = i; j < patternArray.length; j++) {
+            if (wordArray[j].equals(wordEntry)) {
+                wordArray[j] = "**" + patternEntry;
+            }
+            if (patternArray[j].equals(patternEntry)) {
+                patternArray[j] = "**" + patternEntry;
+            }
+        }
+    }
+    return true;
 }
 ```
 
@@ -193,38 +186,38 @@ import org.bearfly.fun.javalearn.algorithms.impl.AlgorithmsImpl;
 import org.junit.Test;
 
 public class AlgorithmsTest {
-	@Test
-	public void testStringMatch() {
-		IAlgorithms as = new AlgorithmsImpl();
+    @Test
+    public void testStringMatch() {
+        IAlgorithms as = new AlgorithmsImpl();
 
-		String input = "java hello world";
-		String pattern = "ABC";
-		assertEquals(true, as.matchPattern(input, pattern));
+        String input = "java hello world";
+        String pattern = "ABC";
+        assertEquals(true, as.matchPattern(input, pattern));
 
-		input = "hello hello hello";
-		pattern = "AAA";
-		assertEquals(true, as.matchPattern(input, pattern));
+        input = "hello hello hello";
+        pattern = "AAA";
+        assertEquals(true, as.matchPattern(input, pattern));
 
-		input = "hello java hello java good";
-		pattern = "ABABC";
-		assertEquals(true, as.matchPattern(input, pattern));
+        input = "hello java hello java good";
+        pattern = "ABABC";
+        assertEquals(true, as.matchPattern(input, pattern));
 
-		input = "hello java hello java good";
-		pattern = "ABABD";
-		assertEquals(true, as.matchPattern(input, pattern));
+        input = "hello java hello java good";
+        pattern = "ABABD";
+        assertEquals(true, as.matchPattern(input, pattern));
 
-		input = "hello java hello java good";
-		pattern = "ABABA";
-		assertEquals(false, as.matchPattern(input, pattern));
+        input = "hello java hello java good";
+        pattern = "ABABA";
+        assertEquals(false, as.matchPattern(input, pattern));
 
-		input = "java hello hello";
-		pattern = "ABC";
-		assertEquals(false, as.matchPattern(input, pattern));
+        input = "java hello hello";
+        pattern = "ABC";
+        assertEquals(false, as.matchPattern(input, pattern));
 
-		input = "java hello hello";
-		pattern = "AB";
-		assertEquals(false, as.matchPattern(input, pattern));
-	}
+        input = "java hello hello";
+        pattern = "AB";
+        assertEquals(false, as.matchPattern(input, pattern));
+    }
 }
 
 ```
