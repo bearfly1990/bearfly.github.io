@@ -1,7 +1,7 @@
 ---
 layout: post
 title: String Pattern
-subtitle: A algorithms problem about mathing by pattern
+subtitle: A algorithms problem about string match
 date: 2018-11-30
 author: BF
 header-img: img/bf/beach_05.jpg
