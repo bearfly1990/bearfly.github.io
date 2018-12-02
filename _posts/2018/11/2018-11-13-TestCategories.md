@@ -4,7 +4,7 @@ title: Software Test Categories
 subtitle: The Classification of Test
 date: 2018-11-13
 author: BF
-header-img: img/bf/portrait_01.jpg
+header-img: img/bf/lily_01.jpg
 catalog: true
 tags:
   - test
