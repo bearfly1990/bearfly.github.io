@@ -127,7 +127,7 @@ select JsonResult->'$[*].CostTime'  from testresult;
 
 这样的话就要设计更多的字段了，我画了一个简单的 E-R 图：
 
-![ER Map](/img/post/2018/12/2018-12-02-TestResultDBDesign.jpg)
+![ER Map](/img/post/2018/12/2018-12-02-TestResultDBDesign.svg)
 
 像这样如果想要查询某一段时间一个 case 的平均时间就很方便了：
 
