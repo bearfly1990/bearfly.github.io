@@ -16,7 +16,7 @@ tags:
 
 开始回顾 Java 的一些基础知识，今天看了下注解。
 
-像在 Spring 中，可以使用 xml 来配置类之间的关系与实例化，虽然结构清晰，但不是很方便，使用注解就能很方便的让框架自己去识别你对类的划分与使用方式。
+像在 Spring 中，可以使用 xml 来配置类之间的关系与实例化，虽然结构清晰，但不是很方便。使用注解来让框架自己去识别你的意图，把配置放在了类定义中。
 
 以下面上周写的简单 REST API 为例，通过使用 Spring MVC 相关注解就能配置方法与 HTTP Request 的对应。而使用 swagger 相关的注解，便很方便的生成对应的 API 文档。
 
@@ -236,7 +236,9 @@ public class AnnotationDemo {
 }
 ```
 
-#最后
+# 最后
+
+相关代码在[javalearn](https://github.com/bearfly1990/PowerScript/tree/master/Java/workspace/javalearn) 下可以找到。
 
 更多的细节待续...
 
