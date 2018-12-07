@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java Annotation
-subtitle: DB Desgin for test result of message import
+subtitle: A brief introduction to annotation in java
 date: 2018-12-06
 author: BF
 header-img: img/bf/lake_04.jpg
@@ -148,29 +148,29 @@ public @interface Login {
 
 四大元注解：
 
-- @Target：注解能用在哪儿 
-    - @Target(ElementType.METHOD) 
-        - ElementType 可能的值： 
-        - TYPE 用于 class 定义 
-        - CONSTRUCTOR 用于构造方法 
-        - METHOD 用于方法 
-        - FIELD 用于成员变量 
-        - LOCAL_VARIABLE 局部变量声明 
-        - PACKAGE 包声明 
-        - PARAMETER 方法参数声明 
-        - ANNOTATION_TYPE 
-        - TYPE_PARAMETER 
-        - TYPE_USE
-- @Retention：注解信息在哪个阶段有效 
-    - @Retention(RetentionPolicy.RUNTIME) 
-    - RetentionPolicy 可能的值： 
-    - SOURCE：源码阶段，编译时，一般是用来告诉编译器一些信息，将被编译器丢弃 
-    - CLASS：注解在 class 文件中可用，会被 VM 丢弃 
-    - **RUNTIME：运行时，VM 在运行时也保留注解，这个才能通过反射获取到**
-- @ Documented 
-    - 将此注解包含在 JavaDoc 中
-- @ Inherited 
-    - 允许子类继承父类中的注解
+- @Target：注解能用在哪儿
+  - @Target(ElementType.METHOD)
+    - ElementType 可能的值：
+    - TYPE 用于 class 定义
+    - CONSTRUCTOR 用于构造方法
+    - METHOD 用于方法
+    - FIELD 用于成员变量
+    - LOCAL_VARIABLE 局部变量声明
+    - PACKAGE 包声明
+    - PARAMETER 方法参数声明
+    - ANNOTATION_TYPE
+    - TYPE_PARAMETER
+    - TYPE_USE
+- @Retention：注解信息在哪个阶段有效
+  - @Retention(RetentionPolicy.RUNTIME)
+  - RetentionPolicy 可能的值：
+  - SOURCE：源码阶段，编译时，一般是用来告诉编译器一些信息，将被编译器丢弃
+  - CLASS：注解在 class 文件中可用，会被 VM 丢弃
+  - **RUNTIME：运行时，VM 在运行时也保留注解，这个才能通过反射获取到**
+- @ Documented
+  - 将此注解包含在 JavaDoc 中
+- @ Inherited
+  - 允许子类继承父类中的注解
 
 下面建了另外一个简单的例子,使用到了@Repeatable (since java8)
 
