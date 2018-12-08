@@ -136,3 +136,4 @@ class TestResultUtils():
 
 - [使用 SQLAlchemy](https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0014021031294178f993c85204e4d1b81ab032070641ce5000)
 - [cmutils_test.py](https://github.com/bearfly1990/PowerScript/blob/master/Python3/mylib/cmutils_test.py)
+- [DB for TestResult](https://bearfly1990.github.io/2018/12/02/TestResultDBDesign/)
