@@ -38,7 +38,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 
 # TestResult
 
-下面是对测试结果的 TestResult 表的映射，需要关联的是 TestDetails 那张表。
+下面是对测试结果的 TestResult 表的映射，需要关联的是 TestDetail 那张表。
 
 TestResult 是单次测试的总结记录，将测试的总体时间，测试的一些环境信息都保存下来，可以根据自己的需求扩充。
 
@@ -75,6 +75,7 @@ class TestCase(Base):
 
 每次测试中，具体的测试结果便存在 TestDetail 这张表中，针对 case 关注的信息不同，可以扩展相应的字段。
 
+可以看到，我在这边建立了他与TestResult, TestCase的外键关联。
 ```python
 class TestDetail(Base):
     __tablename__ = 'TestDetail'
