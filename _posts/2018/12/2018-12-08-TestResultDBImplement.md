@@ -56,7 +56,7 @@ class TestResult(Base):
     TestDetails = relationship('TestDetail')
 ```
 
-# Testcase
+# TestCase
 
 每一轮测试中，都会有分为不同的 Test Case，而在多次测试时，许多 Case 都是重复的，所以将相关的信息都保存在这个表中。
 
@@ -76,6 +76,7 @@ class TestCase(Base):
 每次测试中，具体的测试结果便存在 TestDetail 这张表中，针对 case 关注的信息不同，可以扩展相应的字段。
 
 可以看到，我在这边建立了他与TestResult, TestCase的外键关联。
+
 ```python
 class TestDetail(Base):
     __tablename__ = 'TestDetail'
