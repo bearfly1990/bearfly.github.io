@@ -18,7 +18,7 @@ tags:
 
 这样的话就涉及一个问题，因为是并发跑的，所以可以会出现资源争抢的问题，那么就需要对读写加锁控制。
 
-在网上查了下，发现有第三方文件锁库 fcntl 可以使用，不过可惜的是 it's [Unix Specific](https://docs.python.org/3/library/unix.html)
+在网上查了下，发现有第三方文件锁库 fcntl 可以使用，不过可惜的是[Unix Specific](https://docs.python.org/3/library/unix.html)
 
 所以最直接的还是用线程锁来解决这个问题
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
 运行的结果，和预期的效果一样：
 
-```bash
+```batch
 PS C:\Users\mayn\Desktop\workspace\python_file_lock> python .\file_lock_demo.py
 Thread Thread-3 acquire lock
 Thread Thread-3 exit
@@ -91,7 +91,7 @@ Thread Thread-4 exit
 
 # 最后
 
-多线程是个可以探究的很深的问题，还有许多的方面需要继续学习。
+多线程是个可以探究的很深的问题，还有许多的知识点需要继续学习，遇到问题一定要深究一下。
 
 ---
 
