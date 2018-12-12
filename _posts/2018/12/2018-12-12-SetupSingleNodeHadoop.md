@@ -210,9 +210,9 @@ cd /usr/local/hadoop/hadoop-2.7.3/sbin/
 
 如果启动成功，我们便能成功访问下列的网址：
 
-http://www.bearfly.fun:8088/cluster
+[http://www.bearfly.fun:8088/cluster](http://www.bearfly.fun:8088/cluster)
 
-http://www.bearfly.fun:50070/dfshealth.html#tab-overview
+[http://www.bearfly.fun:50070/dfshealth.html#tab-overview](http://www.bearfly.fun:50070/dfshealth.html#tab-overview)
 
 # 最后
 
