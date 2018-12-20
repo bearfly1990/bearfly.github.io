@@ -103,16 +103,25 @@ if __name__ == '__main__':
 下面是运行的结果：
 
 ```powershell
-C:\Users\xiche\Desktop\python_test\task_parallel>python runjobs.py
+C:\Users\bearfly1990\Desktop\python_test\task_parallel>python runjobs.py
 start run job job 001 in parallel
+
 start run job job 002 in parallel
+
 start run job job 003 in parallel
+
 start run job job 004 in parallel
+
 ended run job job 001 in parallel
+
 ended run job job 004 in parallel
+
 ended run job job 003 in parallel
+
 ended run job job 002 in parallel
+
 start run job job 005
+
 ended run job job 005
 start run job job 006
 ended run job job 006
