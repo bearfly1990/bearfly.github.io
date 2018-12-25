@@ -118,8 +118,77 @@ start run job job 006
 ended run job job 006
 ```
 # 升级配置，增加功能
+
+之前（上面）的简单例子是不能够满足实际的需求的，只是多线程的一个简单例子。
+
+这周花了些时间，增加了一些配置项，针对Job提供了JobGroups，每个Group之间都是默认并行的，但是也可以通过pregroup来限定先后顺序。
+而group内部，我则希望是可以配置的，既可以并行，也可以串行。
+
+下面是新的yaml配置：
+```yaml
+description: sample to run jobs 
+Tasks:
+  - taskid: 01
+    name: task 01
+    mode: import
+    type: T
+    file: 01.txt
+  - taskid: 02
+    name: task 02
+    mode: import
+    type: S
+    file: 02.txt
+  - taskid: 03
+    name: task 03
+    mode: jobgroup
+    JobGroups:
+      - id: 1
+        name: G1
+        mode: parallel
+        Jobs:
+          - jobid: 001
+            name: job G1-01 
+          - jobid: 002
+            name: job G1-02 
+          - jobid: 003
+            name: job G1-03 
+          - jobid: 004
+            name: job G1-04 
+      - id: 2
+        name: G2
+        mode: parallel
+        Jobs:
+          - jobid: 005
+            name: job G2-05 
+          - jobid: 006
+            name: job G2-06 
+          - jobid: 007
+            name: job G2-07 
+          - jobid: 008
+            name: job G2-08 
+      - id: 3
+        name: G3
+        mode: serial
+        pregroup: 1
+        Jobs:
+          - jobid: 009
+            name: job G3-09 
+          - jobid: 010
+            name: job G3-10 
+          - jobid: 011
+            name: job G3-11 
+          - jobid: 012
+            name: job G3-12 
+  - taskid: 04
+    name: hello world
+    mode: say
+  - taskid: 05
+    name: test passed
+    mode: wait   
 ```
 
+下面是具体的实现，已经在一些关键点加了备注：
+```python
 import yaml
 import threading
 import random
@@ -163,14 +232,15 @@ class JobProcessor():
         
         pregroup = job_group.get('pregroup', -1)
         jobs = job_group['Jobs']
+        # default mode is parallel
         mode = job_group.get('mode', 'parallel')
-        # add jobs to the queu
+        # add jobs to the queue
         jobs_num = len(jobs)
         jobs_queue = queue.Queue(jobs_num)
         job_goup_map[job_group['id']] = jobs_queue
         for job in jobs:
             jobs_queue.put(Job(job['jobid'], job['name']))
-        # wait pre group run finished if have pregroup
+        # wait for pregroup run finished if have pregroup
         if(pregroup != -1):
             while(True):
                 pre_queue = job_goup_map.get(pregroup, None)
@@ -179,34 +249,37 @@ class JobProcessor():
                     break
                 time.sleep(1)
         
-        # print('### start run jobgroup:{} ###'.format(job_group['name']))
-        self.queue = jobs_queue
+        print('### start run jobgroup:{} ###'.format(job_group['name']))
         if(mode == 'parallel'):
-            self.run_jobs_parallel()
-            # JobProcessor(jobs_queue).run_jobs_parallel()
+            JobProcessor(jobs_queue).run_jobs_parallel()
         else:
-            self.run_jobs_serial()
-            # JobProcessor(jobs_queue).run_jobs_serial()
+            JobProcessor(jobs_queue).run_jobs_serial()
         print('### end run jobgroup:{} ###'.format(job_group['name']))
 
     def run_job_groups(self, job_groups):
+        # map each group queue, so that we could check the group is finished or not.
         job_goup_map = {}
+        thread_list = []
+
         for job_group in job_groups:
             run_job_group_thread = threading.Thread(
                 target=self.run_job_group, args=(job_group, job_goup_map))
+            thread_list.append(run_job_group_thread)
             run_job_group_thread.start()
+        # wait for all groups are finished
+        for thread in thread_list:
+            thread.join()
 
 def run_import(importInfo):
     print('import {}'.format(importInfo.name))
 
 def main():
-    fin = open('JobSchedule_BatchServer.yaml', 'r', encoding='utf-8')
+    fin = open('jobs.yaml', 'r', encoding='utf-8')
     json_content = yaml.load(fin)
     task_list = json_content['Tasks']
 
     for task in task_list:
-        print(task['name'], '|', task['mode'], '|', task.get(
-            'type', 'None'), '|', task.get('file', 'None'))
+        print(task['name'], '|', task['mode'], '|', task.get('type', 'None'), '|', task.get('file', 'None'))
         task_mode = task['mode'].lower()
         if(task_mode == 'jobgroup'):
             JobProcessor().run_job_groups(task['JobGroups'])
@@ -221,11 +294,53 @@ if __name__ == '__main__':
     main()
 ```
 
-
+下面是一次跑的例子：
+```bash
+c:\Users\mayn\Desktop\workspace\python_yaml>python runjobs.py
+task 01 | import | T | 01.txt
+import task 01
+task 02 | import | S | 02.txt
+import task 02
+task 03 | jobgroup | None | None
+### start run jobgroup:G1 ###
+### start run jobgroup:G2 ###
+start run job job G1-01
+start run job job G1-02
+start run job job G2-05
+start run job job G2-06
+start run job job G1-03
+start run job job G1-04
+start run job job G2-07
+start run job job G2-08
+ended run job job G2-05
+ended run job job G1-02
+ended run job job G1-01
+ended run job job G2-06
+ended run job job G1-03
+ended run job job G2-08
+ended run job job G1-04
+ended run job job G2-07
+### start run jobgroup:G3 ###
+### end run jobgroup:G1 ###
+start run job job G3-09
+### end run jobgroup:G2 ###
+ended run job job G3-09
+start run job job G3-10
+ended run job job G3-10
+start run job job G3-11
+ended run job job G3-11
+start run job job G3-12
+ended run job job G3-12
+### end run jobgroup:G3 ###
+hello world | say | None | None
+say hello world
+test passed | wait | None | None
+wait test passed
+```
 
 # 最后
 
-具体实现在真正写的时候需要再调整一下。
+具体实现在真正写的时候需要再调整一下，而且感觉代码还可以优化，感觉目前并不是最好的实现方式，或者说写法有点怪。。。
 
 ---
 
