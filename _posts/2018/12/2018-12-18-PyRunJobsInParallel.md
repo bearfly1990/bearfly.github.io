@@ -117,6 +117,111 @@ ended run job job 005
 start run job job 006
 ended run job job 006
 ```
+# 升级配置，增加功能
+```
+
+import yaml
+import threading
+import random
+import time
+import queue
+
+class ImportInfo:
+    def __init__(self, name, type, file):
+        self.name = name
+        self.type = type
+        self.file = file
+class Job:
+    def __init__(self, jobid, name):
+        self.jobid = jobid
+        self.name = name
+
+class JobProcessor():
+    def __init__(self, queue=None):
+        self.queue = queue
+
+    def run_job(self, job):
+        print('start run job {}'.format(job.name))
+        time.sleep(random.randint(1, 7))
+        print('ended run job {}'.format(job.name))
+        self.queue.task_done()
+
+    def run_jobs_parallel(self):
+        while not self.queue.empty():
+            job = self.queue.get()
+            my_thread = threading.Thread(target=self.run_job, args=(job,))
+            my_thread.start()
+        self.queue.join()
+
+    def run_jobs_serial(self):
+        while not self.queue.empty():
+            job = self.queue.get()
+            self.run_job(job)
+        self.queue.join()
+
+    def run_job_group(self, job_group, job_goup_map):
+        
+        pregroup = job_group.get('pregroup', -1)
+        jobs = job_group['Jobs']
+        mode = job_group.get('mode', 'parallel')
+        # add jobs to the queu
+        jobs_num = len(jobs)
+        jobs_queue = queue.Queue(jobs_num)
+        job_goup_map[job_group['id']] = jobs_queue
+        for job in jobs:
+            jobs_queue.put(Job(job['jobid'], job['name']))
+        # wait pre group run finished if have pregroup
+        if(pregroup != -1):
+            while(True):
+                pre_queue = job_goup_map.get(pregroup, None)
+                if pre_queue:
+                    pre_queue.join()
+                    break
+                time.sleep(1)
+        
+        # print('### start run jobgroup:{} ###'.format(job_group['name']))
+        self.queue = jobs_queue
+        if(mode == 'parallel'):
+            self.run_jobs_parallel()
+            # JobProcessor(jobs_queue).run_jobs_parallel()
+        else:
+            self.run_jobs_serial()
+            # JobProcessor(jobs_queue).run_jobs_serial()
+        print('### end run jobgroup:{} ###'.format(job_group['name']))
+
+    def run_job_groups(self, job_groups):
+        job_goup_map = {}
+        for job_group in job_groups:
+            run_job_group_thread = threading.Thread(
+                target=self.run_job_group, args=(job_group, job_goup_map))
+            run_job_group_thread.start()
+
+def run_import(importInfo):
+    print('import {}'.format(importInfo.name))
+
+def main():
+    fin = open('JobSchedule_BatchServer.yaml', 'r', encoding='utf-8')
+    json_content = yaml.load(fin)
+    task_list = json_content['Tasks']
+
+    for task in task_list:
+        print(task['name'], '|', task['mode'], '|', task.get(
+            'type', 'None'), '|', task.get('file', 'None'))
+        task_mode = task['mode'].lower()
+        if(task_mode == 'jobgroup'):
+            JobProcessor().run_job_groups(task['JobGroups'])
+        elif(task_mode == 'import'):
+            run_import(ImportInfo(task['name'], task['type'], task['file']))
+        elif(task_mode == 'say'):
+            print('say {}'.format(task['name']))
+        elif(task_mode == 'wait'):
+            print('wait {}'.format(task['name']))
+
+if __name__ == '__main__':
+    main()
+```
+
+
 
 # 最后
 
