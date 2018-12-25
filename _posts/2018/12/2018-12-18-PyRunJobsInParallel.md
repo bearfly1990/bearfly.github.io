@@ -117,16 +117,18 @@ ended run job job 005
 start run job job 006
 ended run job job 006
 ```
+
 # 升级配置，增加功能
 
 之前（上面）的简单例子是不能够满足实际的需求的，只是多线程的一个简单例子。
 
-这周花了些时间，增加了一些配置项，针对Job提供了JobGroups，每个Group之间都是默认并行的，但是也可以通过pregroup来限定先后顺序。
-而group内部，我则希望是可以配置的，既可以并行，也可以串行。
+这周花了些时间，增加了一些配置项，针对 Job 提供了 JobGroups，每个 Group 之间都是默认并行的，但是也可以通过 pregroup 来限定先后顺序。
+而 group 内部，我则希望是可以配置的，既可以并行，也可以串行。
 
-下面是新的yaml配置：
+下面是新的 yaml 配置：
+
 ```yaml
-description: sample to run jobs 
+description: sample to run jobs
 Tasks:
   - taskid: 01
     name: task 01
@@ -147,47 +149,48 @@ Tasks:
         mode: parallel
         Jobs:
           - jobid: 001
-            name: job G1-01 
+            name: job G1-01
           - jobid: 002
-            name: job G1-02 
+            name: job G1-02
           - jobid: 003
-            name: job G1-03 
+            name: job G1-03
           - jobid: 004
-            name: job G1-04 
+            name: job G1-04
       - id: 2
         name: G2
         mode: parallel
         Jobs:
           - jobid: 005
-            name: job G2-05 
+            name: job G2-05
           - jobid: 006
-            name: job G2-06 
+            name: job G2-06
           - jobid: 007
-            name: job G2-07 
+            name: job G2-07
           - jobid: 008
-            name: job G2-08 
+            name: job G2-08
       - id: 3
         name: G3
         mode: serial
         pregroup: 1
         Jobs:
           - jobid: 009
-            name: job G3-09 
+            name: job G3-09
           - jobid: 010
-            name: job G3-10 
+            name: job G3-10
           - jobid: 011
-            name: job G3-11 
+            name: job G3-11
           - jobid: 012
-            name: job G3-12 
+            name: job G3-12
   - taskid: 04
     name: hello world
     mode: say
   - taskid: 05
     name: test passed
-    mode: wait   
+    mode: wait
 ```
 
 下面是具体的实现，已经在一些关键点加了备注：
+
 ```python
 import yaml
 import threading
@@ -229,7 +232,7 @@ class JobProcessor():
         self.queue.join()
 
     def run_job_group(self, job_group, job_goup_map):
-        
+
         pregroup = job_group.get('pregroup', -1)
         jobs = job_group['Jobs']
         # default mode is parallel
@@ -248,7 +251,7 @@ class JobProcessor():
                     pre_queue.join()
                     break
                 time.sleep(1)
-        
+
         print('### start run jobgroup:{} ###'.format(job_group['name']))
         if(mode == 'parallel'):
             JobProcessor(jobs_queue).run_jobs_parallel()
@@ -295,6 +298,7 @@ if __name__ == '__main__':
 ```
 
 下面是一次跑的例子：
+
 ```bash
 c:\Users\mayn\Desktop\workspace\python_yaml>python runjobs.py
 task 01 | import | T | 01.txt
