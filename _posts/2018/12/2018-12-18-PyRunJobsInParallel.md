@@ -231,7 +231,7 @@ class JobProcessor():
             self.run_job(job)
         self.queue.join()
 
-    def run_job_group(self, job_group, job_goup_map):
+    def run_job_group(self, job_group, job_group_map):
 
         pregroup = job_group.get('pregroup', -1)
         jobs = job_group['Jobs']
@@ -240,13 +240,13 @@ class JobProcessor():
         # add jobs to the queue
         jobs_num = len(jobs)
         jobs_queue = queue.Queue(jobs_num)
-        job_goup_map[job_group['id']] = jobs_queue
+        job_group_map[job_group['id']] = jobs_queue
         for job in jobs:
             jobs_queue.put(Job(job['jobid'], job['name']))
         # wait for pregroup run finished if have pregroup
         if(pregroup != -1):
             while(True):
-                pre_queue = job_goup_map.get(pregroup, None)
+                pre_queue = job_group_map.get(pregroup, None)
                 if pre_queue:
                     pre_queue.join()
                     break
@@ -261,12 +261,12 @@ class JobProcessor():
 
     def run_job_groups(self, job_groups):
         # map each group queue, so that we could check the group is finished or not.
-        job_goup_map = {}
+        job_group_map = {}
         thread_list = []
 
         for job_group in job_groups:
             run_job_group_thread = threading.Thread(
-                target=self.run_job_group, args=(job_group, job_goup_map))
+                target=self.run_job_group, args=(job_group, job_group_map))
             thread_list.append(run_job_group_thread)
             run_job_group_thread.start()
         # wait for all groups are finished
@@ -340,6 +340,96 @@ hello world | say | None | None
 say hello world
 test passed | wait | None | None
 wait test passed
+```
+
+# 使用 map 和 multiprocessing
+
+在晓辉建议下，使用 map 函数结合线程池简化了代码，不用自己控制并发了，api 更简单。
+
+```python
+import yaml
+import threading
+import random
+import time
+import queue
+from multiprocessing.dummy import Pool as ThreadPool
+
+class ImportInfo:
+    def __init__(self, name, type, file):
+        self.name = name
+        self.type = type
+        self.file = file
+class Job:
+    def __init__(self, jobid, name):
+        self.jobid = jobid
+        self.name = name
+
+class JobProcessor():
+    def __init__(self, queue=None):
+        self.queue = queue
+
+    def run_job(self, job):
+        print('start run job {}'.format(job.name))
+        time.sleep(random.randint(1, 7))
+        print('ended run job {}'.format(job.name))
+
+    def run_job_group(self, param):
+        job_group = param['job_group']
+        job_group_map = param['job_group_map']
+        pregroup = job_group.get('pregroup', -1)
+        # add jobs to a new list
+        jobs = [Job(job['jobid'], job['name']) for job in job_group['Jobs']]
+        # default mode is parallel
+        mode = job_group.get('mode', 'parallel')
+        jobs_thread_pool = ThreadPool(len(jobs))
+        job_group_map[job_group['id']] = jobs_thread_pool
+        # wait for pregroup run finished if have pregroup
+        if(pregroup != -1):
+            while(True):
+                pre_group_pool = job_group_map.get(pregroup, None)
+                if pre_group_pool:
+                    pre_group_pool.close()
+                    pre_group_pool.join()
+                    break
+                time.sleep(1)
+        print('### start run jobgroup:{} ###'.format(job_group['name']))
+        if(mode == 'parallel'):
+            jobs_thread_pool.map(self.run_job, jobs)
+        else:
+            list(map(self.run_job, jobs))
+
+        print('### end run jobgroup:{} ###'.format(job_group['name']))
+
+    def run_job_groups(self, job_groups):
+        job_group_map = {}
+        groups_thread_pool = ThreadPool(len(job_groups))
+        job_group_param = [{'job_group':job_group, 'job_group_map':job_group_map} for job_group in job_groups]
+        groups_thread_pool.map(self.run_job_group, job_group_param)
+        groups_thread_pool.close()
+        groups_thread_pool.join()
+
+def run_import(importInfo):
+    print('import {}'.format(importInfo.name))
+
+def main():
+    fin = open('jobs.yaml', 'r', encoding='utf-8')
+    json_content = yaml.load(fin)
+    task_list = json_content['Tasks']
+
+    for task in task_list:
+        print(task['name'], '|', task['mode'], '|', task.get('type', 'None'), '|', task.get('file', 'None'))
+        task_mode = task['mode'].lower()
+        if(task_mode == 'jobgroup'):
+            JobProcessor().run_job_groups(task['JobGroups'])
+        elif(task_mode == 'import'):
+            run_import(ImportInfo(task['name'], task['type'], task['file']))
+        elif(task_mode == 'say'):
+            print('say {}'.format(task['name']))
+        elif(task_mode == 'wait'):
+            print('wait {}'.format(task['name']))
+
+if __name__ == '__main__':
+    main()
 ```
 
 # 最后
