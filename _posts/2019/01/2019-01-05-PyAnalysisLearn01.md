@@ -4,7 +4,7 @@ title: Analyze 1.usa.gove from bit.ly
 subtitle: Python for Data Analysis Learn 01
 date: 2019-01-05
 author: BF
-header-img: img/bf/snow_01.jpg
+header-img: img/bf/book_01.jpg
 catalog: true
 tags:
   - python
@@ -200,7 +200,7 @@ tz_counts[:10].plot(kind='barh', rot=0)
 plt.show()
 ```
 
-![2019-01-05-PyAnalysisLearn01.01.jpg](img/post/2019/01/2019-01-05-PyAnalysisLearn01.01.jpg)
+![2019-01-05-PyAnalysisLearn01.01.jpg](/img/post/2019/01/2019-01-05-PyAnalysisLearn01.01.jpg)
 
 # 解析 Agent 信息
 
@@ -306,10 +306,10 @@ America/New_York           339.0    912.0
 ```
 
 这里画了两张图，一张为实际数值:
-![2019-01-05-PyAnalysisLearn01.02.jpg](img/post/2019/01/2019-01-05-PyAnalysisLearn01.02.jpg)
+![2019-01-05-PyAnalysisLearn01.02.jpg](/img/post/2019/01/2019-01-05-PyAnalysisLearn01.02.jpg)
 
 另一张则为百分比：
-![2019-01-05-PyAnalysisLearn01.03.jpg](img/post/2019/01/2019-01-05-PyAnalysisLearn01.03.jpg)
+![2019-01-05-PyAnalysisLearn01.03.jpg](/img/post/2019/01/2019-01-05-PyAnalysisLearn01.03.jpg)
 
 # 最后
 
