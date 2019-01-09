@@ -132,7 +132,11 @@ systemctl restart network.service
 service network stop
 service network start
 ```
-而我像开头说的，因为带了GUI，所以我这边还需要停掉一个`NetworkManager`服务，使用`chkconfig NetworkManager off`。
+而我像开头说的，因为带了GUI，所以我这边还需要停掉一个`NetworkManager`服务，使用:
+```bash
+service NetworkManager stop
+chkconfig NetworkManager off
+```
 
 此外，为了方便，防火墙可以关闭掉：
 ```bash
