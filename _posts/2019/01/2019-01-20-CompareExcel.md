@@ -79,9 +79,8 @@ def compare_excels(excel_file01, excel_file02):
 
 if __name__ == '__main__':
     compare_excels('test01.xlsx', 'test01.copy.xlsx')
-    compare_excels('test01.xlsx', 'test03.xlsx')
-    compare_excels('test01.xlsx', 'test03.xlsx')
     compare_excels('test01.xlsx', 'test02.xlsx')
+    compare_excels('test01.xlsx', 'test03.xlsx')
     compare_excels('test01.xlsx', 'test04.xlsx')
 ```
 
@@ -91,12 +90,6 @@ if __name__ == '__main__':
 C:\Users\mayn\Desktop\GitSpace\PowerScript\Python3\openpyxl\compare_excels>python compare_excels.py
 ------compare test01.xlsx & test01.copy.xlsx------
 compare test01.xlsx:Sheet1 & test01.copy.xlsx:Sheet1
-------compare test01.xlsx & test03.xlsx------
-sheets name not matched!
-test01.xlsx:Sheet1 / test03.xlsx:NotMatch
-------compare test01.xlsx & test03.xlsx------
-sheets name not matched!
-test01.xlsx:Sheet1 / test03.xlsx:NotMatch
 ------compare test01.xlsx & test02.xlsx------
 compare test01.xlsx:Sheet1 & test02.xlsx:Sheet1
 row is not matched! 4 / 5
@@ -104,6 +97,9 @@ B2: mm-dd-yy / [$-409]d\-mmm\-yy;@
 C4: Test03 / Test04
 B5: None / 10/21/2010
 C5: None / Test05
+------compare test01.xlsx & test03.xlsx------
+sheets name not matched!
+test01.xlsx:Sheet1 / test03.xlsx:NotMatch
 ------compare test01.xlsx & test04.xlsx------
 compare test01.xlsx:Sheet1 & test04.xlsx:sheet1
 row is not matched! 4 / 6
