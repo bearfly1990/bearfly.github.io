@@ -55,34 +55,34 @@ def compare_sheet(sheet01, sheet02):
         for index_col in range(max_column):
             compare_cell(sheet01.cell(column=index_col+1, row=index_row+1), sheet02.cell(column=index_col+1, row=index_row+1))
 
-def test_compare_same_excel(excel_file01, excel_file02):
+def compare_excels(excel_file01, excel_file02):
     print('------compare {} & {}------'.format(excel_file01, excel_file02))
     wb01 = openpyxl.load_workbook(excel_file01)
     wb02 = openpyxl.load_workbook(excel_file02)
-
+    
     sheet_names_01 = wb01.get_sheet_names()
     sheet_names_02 = wb02.get_sheet_names()
-
+     
     if(len(sheet_names_01) != len(sheet_names_02)):
         print('sheets number are not matched!')
         return
-
+        
     for i in range(len(sheet_names_01)):
         if(len(sheet_names_01[i]) != len(sheet_names_02[i])):
             print('sheets name not matched!\n{}:{} / {}:{}'.format(excel_file01, sheet_names_01[i], excel_file02, sheet_names_02[i]))
             return
         sheet01 = wb01.get_sheet_by_name(sheet_names_01[i])
         sheet02 = wb02.get_sheet_by_name(sheet_names_02[i])
-
+        
         print('compare {}:{} & {}:{}'.format(excel_file01, sheet01.title, excel_file02, sheet02.title))
         compare_sheet(sheet01, sheet02)
 
 if __name__ == '__main__':
-    test_compare_same_excel('test01.xlsx', 'test01.copy.xlsx')
-    test_compare_same_excel('test01.xlsx', 'test03.xlsx')
-    test_compare_same_excel('test01.xlsx', 'test03.xlsx')
-    test_compare_same_excel('test01.xlsx', 'test02.xlsx')
-    test_compare_same_excel('test01.xlsx', 'test04.xlsx')
+    compare_excels('test01.xlsx', 'test01.copy.xlsx')
+    compare_excels('test01.xlsx', 'test03.xlsx')
+    compare_excels('test01.xlsx', 'test03.xlsx')
+    compare_excels('test01.xlsx', 'test02.xlsx')
+    compare_excels('test01.xlsx', 'test04.xlsx')
 ```
 
 目前的输出结果如下：
