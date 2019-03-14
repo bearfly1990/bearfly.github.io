@@ -4,7 +4,7 @@ title: Update CSV Column Values
 subtitle: Update all data in one column on csv
 date: 2019-03-14
 author: BF
-header-img: img/bf/python_02.jpg
+header-img: img/bf/python.jpg
 catalog: true
 tags:
   - python
