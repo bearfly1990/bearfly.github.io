@@ -276,14 +276,17 @@ America/Argentina/Mendoza               0.0      1.0
 
 ```python
 # order by asc
+
 indexer = agg_counts.sum(1).argsort()
 count_subset = agg_counts.take(indexer)[-10:]
 print(count_subset)
 
 # draw the real number
+
 count_subset.plot(kind='barh', stacked=True)
 
 # draw with %
+
 normed_subset = count_subset = count_subset.div(count_subset.sum(1), axis=0)
 normed_subset.plot(kind='barh', stacked=True)
 plt.show()

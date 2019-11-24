@@ -142,9 +142,10 @@ PS C:\Users\mayn\Desktop\GitSpace\PowerScript\Python3\openpyxl\generate_report> 
 def write_to_excel(template, report):
     wb_tpl = openpyxl.load_workbook(template)
     ws_report_tpl = wb_tpl['report'] #workbook.get_sheet_by_name('report')
+    
     workbook = openpyxl.Workbook(write_only=True)
     ws_report = workbook.create_sheet('report')
-    for row in ws_report_tpl.rows:
+    for row in ws_report_tpl.rows:    
         row_tpl = []
         for cell in row:
             cell_tpl = openpyxl.cell.WriteOnlyCell(ws_report)

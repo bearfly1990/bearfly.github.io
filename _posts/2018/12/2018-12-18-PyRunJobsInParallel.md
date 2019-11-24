@@ -236,14 +236,18 @@ class JobProcessor():
         pregroup = job_group.get('pregroup', -1)
         jobs = job_group['Jobs']
         # default mode is parallel
+        
         mode = job_group.get('mode', 'parallel')
         # add jobs to the queue
+        
         jobs_num = len(jobs)
         jobs_queue = queue.Queue(jobs_num)
         job_group_map[job_group['id']] = jobs_queue
         for job in jobs:
             jobs_queue.put(Job(job['jobid'], job['name']))
+            
         # wait for pregroup run finished if have pregroup
+        
         if(pregroup != -1):
             while(True):
                 pre_queue = job_group_map.get(pregroup, None)
@@ -260,7 +264,9 @@ class JobProcessor():
         print('### end run jobgroup:{} ###'.format(job_group['name']))
 
     def run_job_groups(self, job_groups):
+    
         # map each group queue, so that we could check the group is finished or not.
+        
         job_group_map = {}
         thread_list = []
 
@@ -269,7 +275,9 @@ class JobProcessor():
                 target=self.run_job_group, args=(job_group, job_group_map))
             thread_list.append(run_job_group_thread)
             run_job_group_thread.start()
+            
         # wait for all groups are finished
+        
         for thread in thread_list:
             thread.join()
 

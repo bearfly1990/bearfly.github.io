@@ -131,7 +131,9 @@ df_output = pd.DataFrame(dict_output)
 df_output.to_excel("output.xlsx", sheet_name='details', index=False)
 
 # with pd.ExcelWriter('output.xlsx') as writer:  # doctest: +SKIP
+
 #     ...     df1.to_excel(writer, sheet_name='Sheet_name_1')
+
 #     df2.to_excel(writer, sheet_name='Sheet_name_2'
 ```
 output in excel:

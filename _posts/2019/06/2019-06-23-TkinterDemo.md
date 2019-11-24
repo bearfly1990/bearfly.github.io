@@ -27,8 +27,11 @@ Python 里可以写界面的选择很多，也有很强大和专业的库(e.g. P
 
 ```python
 # Python 2.x使用这行
+
 #from Tkinter import *
+
 # Python 3.x使用这行
+
 from tkinter import *
 ```
 
