@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 字符串相似度
+title: Text Similarity
 subtitle: 比较两个字符串之间的相似程度
 date: 2019-11-24
 author: BF
