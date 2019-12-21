@@ -189,6 +189,6 @@ PS C:\Users\mayn\Desktop\GitSpace\PowerScript\Python3\openpyxl\generate_report> 
 2019-11-10 10:55:18.039439[INFO] cost time:0:00:19.786171
 ```
 
-可以看到时间花费上普通用法比 write_only 慢了 36%左右，在数据量 volumn 更大的时候更明显，内存上也使用更不用说。
+可以看到时间上普通用法比 write_only 慢了 36%左右，在数据量大的时候更明显，内存上的消耗更不用说。
 
 完整的代码在[demo04_compare_csv](https://github.com/bearfly1990/PowerScript/tree/master/Python3/openpyxl/generate_report)
