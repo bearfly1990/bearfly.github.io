@@ -18,6 +18,7 @@ tags:
 # 样例
 
 以下面简单的例子为例,有下面三个文件， 想要数据合并到一起。
+
 csv-Student
 
 | id  | name |
@@ -44,8 +45,9 @@ csv-Score
 | 4   | 数学  | 77    |
 
 csv-Score2
+
 | SID | Class | Score |
-| --- | ----- | ----- |
+| --- | --- | --- |
 | 5 | 语文 | 77 |
 | 5 | 数学 | 88 |
 | 5 | 英文 | 66 |
@@ -64,6 +66,7 @@ def concat_student_score(file_student, file_score, file_score2):
     df_merged = pd.merge(df_score, df_stu, how='outer', on=['SID'])
     print(df_merged)
 ```
+
 |     | SID | Class | Score | Name |
 | --- | --- | ----- | ----- | ---- |
 | 0   | 1   | 语文  | 70    | CX   |
@@ -81,13 +84,13 @@ def concat_student_score(file_student, file_score, file_score2):
 | 12  | 5   | 语文  | 77    | BF   |
 | 13  | 5   | 数学  | 88    | BF   |
 | 14  | 5   | 英文  | 66    | BF   |
-
-以上是最简单的应用，还有许多的参数可以控制合并的细节，可以参考下面的资料，尤其是最后的官方的与sql的对比应用，大部分sql能实现的，pandas都可以
+ 
+以上是最简单的应用，还有许多的参数可以控制合并的细节，可以参考下面的资料，尤其是最后的官方的与 sql 的对比应用，大部分 sql 能实现的，pandas 都可以
 
 [demo05](https://github.com/bearfly1990/PowerScript/tree/master/Python3/pandas/demo05_merge_df)
 
 # 参考
 
-- [python3：pandas（合并concat和merge）](https://blog.csdn.net/sunshine_lyn/article/details/81535529)
-- [PANDAS 数据合并与重塑（join/merge篇）](https://www.cnblogs.com/bigshow1949/p/7016235.html)
+- [python3：pandas（合并 concat 和 merge）](https://blog.csdn.net/sunshine_lyn/article/details/81535529)
+- [PANDAS 数据合并与重塑（join/merge 篇）](https://www.cnblogs.com/bigshow1949/p/7016235.html)
 - [Comparison with SQL](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_sql.html)
