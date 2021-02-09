@@ -71,7 +71,9 @@ if __name__=="__main__":
 ```
 
 ## 去掉后3秒
+
 通过得到总时间，再减去3秒的方式，剪切得到新的视频，并生成到`output`目录。
+
 ```python
 total_seconds = video.duration
 start_time = 0
@@ -80,13 +82,16 @@ video = video.subclip(int(start_time), int(stop_time))#执行剪切操作
 video.to_videofile(target, fps=20, remove_temp=True)#输出文件
 ```
 
-##合并成一个视频
+## 合并成一个视频
+
 这边对于每个新的视频，都重新设置位置和size，主要是为了支持后面合并不同分辨率做准备。
+
 ```python
 video = video.set_start(start_sec).set_pos("center").resize(video.size[0]/1300)
 start_sec = start_sec + video.duration
 video_list.append(video)#将加载完后的视频加入列表
 ```
+
 这边使用`CompositeVideoClip`来合并视频，而上面的`start_sec`，便是每个视频在合并的视频中，开始播放的时间。如果不设置，就是一所有视频都在`0`s开始播放，大家可以想到，如果这个时间配置视频的位置，就可以达到同时放多个小视频的效果，而这里使用它，纯粹是为了支持合并多个不同的分辨率
 ```python
 final_clip = CompositeVideoClip(video_list, size=(1300, 720))
