@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cut and Combine Tiktok videos
+title: Cut and Combine Tiktok Videos
 subtitle: Cut and Combine downloaded Tiktok videos with moviepy
 date: 2021-02-09
 author: BF
@@ -97,7 +97,12 @@ final_clip.to_videofile(os.path.join(output_folder, 'combined.mp4'), fps=20, rem
 
 完整代码在[moviepy](https://github.com/bearfly1990/PowerScript/tree/master/Python3/moviepy/)
 
+可以关注我的微信视频号，看简单的演示。
+
+![my wechat video QR](/img/bf_wechat_video.jpg)
+
 参考：
+
 * [使用Python+moviepy连接不同尺寸的视频文件](https://cloud.tencent.com/developer/article/1582917)
 * [MoviePy不同尺寸视频vedio_clip或者图片image_clip拼接出现花屏](https://blog.csdn.net/ucsheep/article/details/84630800)
 * [MoviePy问题解决汇总](https://blog.csdn.net/ucsheep/article/details/84387092)
