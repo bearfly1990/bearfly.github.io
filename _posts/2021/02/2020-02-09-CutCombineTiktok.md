@@ -56,7 +56,17 @@ if __name__=="__main__":
             video = video.subclip(int(start_time), int(stop_time))#执行剪切操作
             video.to_videofile(target, fps=20, remove_temp=True)#输出文件
             # os.remove(source)
-            video = video.set_start(start_sec).set_pos("center").resize(video.size[0]/1300)
+            print(video.size[0],video.size[1])
+            print(video.size[0]/1300,video.size[1]/720)
+            rate_x = video.size[0]/1300
+            rate_y = video.size[1]/720
+            rate_max = max(rate_x, rate_y)
+            if rate_max > 1:
+                rate_max = 1/rate_max
+            else:
+                rate_max = 1
+            video = video.set_start(start_sec).set_pos("center").resize(rate_max)
+            print('-=====>', rate_max)
             start_sec = start_sec + video.duration
             video_list.append(video)#将加载完后的视频加入列表
         except Exception as e:
@@ -68,18 +78,6 @@ if __name__=="__main__":
     # final_clip = concatenate_videoclips(video_list)#进行视频合并
     # final_clip.write_videofile(os.path.join(output_folder, 'combined.mp4'), fps=20, remove_temp=True)
     # final_clip.to_videofile(os.path.join(output_folder, 'combined.mp4'), fps=20, remove_temp=True)#将合并后的视频输出
-```
-
-## 去掉后3秒
-
-通过得到总时间，再减去3秒的方式，剪切得到新的视频，并生成到`output`目录。
-
-```python
-total_seconds = video.duration
-start_time = 0
-stop_time = total_seconds - 3
-video = video.subclip(int(start_time), int(stop_time))#执行剪切操作
-video.to_videofile(target, fps=20, remove_temp=True)#输出文件
 ```
 
 ## 合并成一个视频
