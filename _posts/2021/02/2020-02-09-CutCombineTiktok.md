@@ -54,7 +54,7 @@ if __name__=="__main__":
             source = file
             #拼接文件名路径
             target = os.path.join(output_folder, source) 
-            if not os.path.exists(os.path.dirname(target)): #os.path.isdir(os.path.join(root, output)) os.path.join(root, output)
+            if not os.path.exists(os.path.dirname(target)):
                 os.makedirs(os.path.dirname(target))
             video = VideoFileClip(source)
             total_seconds = video.duration
@@ -155,7 +155,7 @@ def convert_video(file):
         # 拼接文件名路径
         target = os.path.join(OUTPUT_FOLDER, file) 
         try:
-            if not os.path.exists(os.path.dirname(target)): # os.path.isdir(os.path.join(root, output)) os.path.join(root, output)
+            if not os.path.exists(os.path.dirname(target)):
                 os.makedirs(os.path.dirname(target))
         except Exception as e:
             print('have error when create subfolder:',e)
