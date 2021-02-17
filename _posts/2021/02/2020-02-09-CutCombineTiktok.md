@@ -12,6 +12,12 @@ tags:
   - tiktok
 ---
 
+#  更新
+
+| date       | update                                                       |
+| ---------- | ------------------------------------------------------------ |
+| 2021-02-17 | 1. 修复了不同视频大小的压缩算法 2. 修改代码结构并支持并发预处理文件 |
+
 # 背景
 
 最近看到tiktok上有许多有意思的视频，所以想下载下来。但下过来的视频会有水印，主要是视频后3秒会有抖音的视频水印，很影响观感。
@@ -95,7 +101,99 @@ video_list.append(video)#将加载完后的视频加入列表
 final_clip = CompositeVideoClip(video_list, size=(1300, 720))
 final_clip.to_videofile(os.path.join(output_folder, 'combined.mp4'), fps=20, remove_temp=True)
 ```
+# 2021-02-17更新
 
+## 修复了不同视频大小的压缩算法 
+
+之前在合并不同大小的视频时，对于合并的算法有问题，不能适应所有的情况。
+
+更新后如下，根据长和宽，适合最合适的缩放大小。
+```python
+rate_x = video.size[0]/1300
+rate_y = video.size[1]/720
+rate_max = max(rate_x, rate_y)
+if rate_max > 1:
+    rate_max = 1/rate_max
+else:
+    rate_max = 1
+VIDEO_LIST[i] = video.set_start(start_sec).set_pos("center").resize(rate_max)
+```
+## 修改代码结构并支持并发预处理文件
+
+使用线程池来实现并发操作，充分使用电脑性能来做数据预处理。
+```python
+executor = ThreadPoolExecutor(max_workers=MAX_WORKERS)
+files = glob.glob('**/*.mp4', recursive=True)
+all_task = [executor.submit(convert_video, (file)) for file in files]
+wait(all_task, return_when=ALL_COMPLETED)
+```
+## 完整新代码如下：
+```python
+import imageio
+import win_unicode_console
+win_unicode_console.enable()
+import os
+from moviepy.video.io.VideoFileClip  import VideoFileClip
+from moviepy.video.compositing.concatenate import concatenate_videoclips
+from moviepy.editor import VideoFileClip, clips_array, vfx, CompositeVideoClip
+import glob
+from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED, FIRST_COMPLETED
+from datetime import datetime
+
+OUTPUT_FOLDER = './output'
+VIDEO_LIST = []
+MAX_WORKERS = 6
+
+def convert_video(file):
+    try:
+        target = os.path.join(OUTPUT_FOLDER, file) # 拼接文件名路径
+        try:
+            if not os.path.exists(os.path.dirname(target)): # os.path.isdir(os.path.join(root, output)) os.path.join(root, output)
+                os.makedirs(os.path.dirname(target))
+        except Exception as e:
+            print('have error when create subfolder:',e)
+        video = VideoFileClip(file)
+        total_seconds = video.duration
+        start_time = 0
+        stop_time = total_seconds - 3
+        video = video.subclip(int(start_time), int(stop_time))# 执行剪切操作
+        video.to_videofile(target, fps=20, remove_temp=True)# 输出文件
+        # os.remove(source)
+        VIDEO_LIST.append(video)# 将加载完后的视频加入列表
+    except Exception as e:
+        print('have error:',e)
+    finally:
+        print(file, 'done')
+
+def combine_videos():
+    start_sec = 0
+    for i, video in enumerate(VIDEO_LIST):
+        # print(video.size[0],video.size[1])
+        # print(video.size[0]/1300,video.size[1]/720)
+        rate_x = video.size[0]/1300
+        rate_y = video.size[1]/720
+        rate_max = max(rate_x, rate_y)
+        if rate_max > 1:
+            rate_max = 1/rate_max
+        else:
+            rate_max = 1
+        VIDEO_LIST[i] = video.set_start(start_sec).set_pos("center").resize(rate_max)
+        start_sec = start_sec + video.duration
+        
+    final_clip = CompositeVideoClip(VIDEO_LIST, size=(1300, 720))   
+    final_clip.to_videofile(os.path.join(OUTPUT_FOLDER, 'combined.mp4'), fps=20, remove_temp=True)
+
+
+if __name__=="__main__":
+    start_time = datetime.now()
+    executor = ThreadPoolExecutor(max_workers=MAX_WORKERS)
+    files = glob.glob('**/*.mp4', recursive=True)
+    all_task = [executor.submit(convert_video, (file)) for file in files]
+    wait(all_task, return_when=ALL_COMPLETED)
+    combine_videos()
+    ended_time = datetime.now()
+    print(f'time cost: {ended_time - start_time}')
+```
 # 最后
 
 完整代码在[moviepy](https://github.com/bearfly1990/PowerScript/tree/master/Python3/moviepy/)
@@ -109,4 +207,5 @@ final_clip.to_videofile(os.path.join(output_folder, 'combined.mp4'), fps=20, rem
 * [使用Python+moviepy连接不同尺寸的视频文件](https://cloud.tencent.com/developer/article/1582917)
 * [MoviePy不同尺寸视频vedio_clip或者图片image_clip拼接出现花屏](https://blog.csdn.net/ucsheep/article/details/84630800)
 * [MoviePy问题解决汇总](https://blog.csdn.net/ucsheep/article/details/84387092)
-*  [MoviePy - 中文文档2-快速上手-MoviePy-视频合成](https://blog.csdn.net/ucsheep/article/details/81329598)
+* [MoviePy - 中文文档2-快速上手-MoviePy-视频合成](https://blog.csdn.net/ucsheep/article/details/81329598)
+* [python线程池 ThreadPoolExecutor 使用详解](https://blog.csdn.net/xiaoyu_wu/article/details/102820384)
