@@ -17,6 +17,9 @@ tags:
 | date       | update                                                       |
 | ---------- | ------------------------------------------------------------ |
 | 2021-02-17 | 1. 修复了不同视频大小的压缩算法 2. 修改代码结构并支持并发预处理文件 |
+| 2021-02-21 | 1. 调整代码结构，封装到类中                                  |
+|            | 2. 优化对文件夹的批处理                                      |
+|            | 3. 视频最后合成的分辨率由视频本身自动决定                    |
 
 # 背景
 
@@ -208,11 +211,141 @@ if __name__=="__main__":
     ended_time = datetime.now()
     print(f'time cost: {ended_time - start_time}')
 ```
+# 2021-02-21更新
+
+## 最后生成的视频分辨率由视频动态决定
+
+遍历所有视频时，记录下长和宽，最后取max来当作最后的分辨率
+```python
+self.max_x_list = []
+self.max_y_list = []
+
+self.max_x = max(self.max_x_list)
+self.max_y = max(self.max_y_list)
+```
+## 根据目录分别生成合成的视频
+
+可以一次性按顺序按目录合成视频，而不是之前的所有目录的视频，更加灵活。
+```python
+files = glob.glob('**/*.mp4', recursive=True)
+if not files:
+    print('no files found')
+    exit(0)
+dirs = list(set(['.' if os.path.dirname(file)=='' else os.path.dirname(file) for file in files]))
+for dir in dirs:
+    tiktok_util = TiktokUtil(input_folder=dir)
+    tiktok_util.preprocess_videos()
+    tiktok_util.combine_videos()
+```
+## 封装到类中
+
+下面是完整代码：
+
+```python
+import imageio
+import win_unicode_console
+win_unicode_console.enable()
+import os
+from moviepy.video.io.VideoFileClip  import VideoFileClip
+from moviepy.video.compositing.concatenate import concatenate_videoclips
+from moviepy.editor import VideoFileClip, clips_array, vfx, CompositeVideoClip
+import glob
+from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED, FIRST_COMPLETED
+from datetime import datetime
+"""
+author: bearfly1990
+create at: 02/01/2021
+description:
+    Utils for send email
+Change log:
+Date          Author      Version    Description
+02/17/2021    bearfly1990 1.0.1      update combine video hight/width resize logic to adapt all videos.
+02/21/2021    bearfly1990 1.0.2      Get max hight/max width from all the input videos, not hard code
+                                     support detail with different folder.
+"""
+class TiktokUtil(object):
+    output_folder = './output'
+    max_workers = 6
+   
+    def __init__(self, remove_watermark=True, input_folder='', output_name='combined.mp4'):
+        self.remove_watermark = remove_watermark
+        self.output_name = output_name
+        self.input_folder=input_folder
+        self.video_list = []
+        self.max_x_list = []
+        self.max_y_list = []
+
+    def convert_video(self, file):
+        try:
+            target = os.path.join(self.output_folder, file)
+            try:
+                if not os.path.exists(os.path.dirname(target)):
+                    os.makedirs(os.path.dirname(target))
+            except Exception as e:
+                print('have error when create subfolder:',e)
+            video = VideoFileClip(file)
+            if self.remove_watermark:
+                total_seconds = video.duration
+                start_time = 0
+                stop_time = total_seconds - 3
+                video = video.subclip(int(start_time), int(stop_time))
+            self.max_x_list.append(video.size[0])
+            self.max_y_list.append(video.size[1])
+            self.video_list.append(video)
+        except Exception as e:
+            print('have error:',e)
+        finally:
+            print(file, 'done')
+
+    def combine_videos(self):
+        self.max_x = max(self.max_x_list)
+        self.max_y = max(self.max_y_list)
+        start_sec = 0
+        for i, video in enumerate(self.video_list):
+
+            rate_x = video.size[0]/self.max_x
+            rate_y = video.size[1]/self.max_y
+            rate_max = max(rate_x, rate_y)
+            if rate_max > 1:
+                rate_max = 1/rate_max
+            else:
+                rate_max = 1
+            self.video_list[i] = video.set_start(start_sec).set_pos("center").resize(rate_max)
+            start_sec = start_sec + video.duration
+        print(self.max_x, self.max_y)
+        final_clip = CompositeVideoClip(self.video_list, size=(self.max_x, self.max_y))   
+        final_clip.to_videofile(os.path.join(self.output_folder, self.input_folder, self.output_name), fps=20, remove_temp=True)
+        final_clip.close()
+
+    def preprocess_videos(self):
+        files = glob.glob(f'{self.input_folder}/*.mp4', recursive=True)
+        executor = ThreadPoolExecutor(max_workers=self.max_workers)
+        all_task = [executor.submit(self.convert_video, (file)) for file in files]
+        wait(all_task, return_when=ALL_COMPLETED)
+        
+if __name__=="__main__":
+    start_time = datetime.now()
+    
+    files = glob.glob('**/*.mp4', recursive=True)
+    if not files:
+        print('no files found')
+        exit(0)
+    dirs = list(set(['.' if os.path.dirname(file)=='' else os.path.dirname(file) for file in files]))
+    for dir in dirs:
+        tiktok_util = TiktokUtil(input_folder=dir)
+        tiktok_util.preprocess_videos()
+        tiktok_util.combine_videos()
+
+    ended_time = datetime.now()
+    print(f'time cost: {ended_time - start_time}')
+
+```
+
+
+
 # 最后
 
 完整代码在[moviepy](https://github.com/bearfly1990/PowerScript/tree/master/Python3/moviepy/)
-
-可以关注我的微信视频号，看简单的演示。
 
 ![my wechat video QR](/img/bf_wechat_video.jpg)
 
